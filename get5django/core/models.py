@@ -1,15 +1,26 @@
 from django.db import models
+from core.services.a2s_info_service import A2sInfoService
 
 # Create your models here.
 class GameServer(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(max_length=255, null=True, blank=True)
+
     url = models.CharField(max_length=255)
     port = models.IntegerField()
     
     ssh_user = models.CharField(max_length=255, null=True, blank=True)
     ssh_password = models.CharField(max_length=255, null=True, blank=True)
     
-    rcon_password = models.CharField(max_length=255)
+    
+    player_password = models.CharField(max_length=255, null=True, blank=True)
+    rcon_password = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def get_info(self):
+        return A2sInfoService.execute({'address':f'{self.url}:{self.port}'})
 
 class Team(models.Model):
     name = models.CharField(max_length=255)

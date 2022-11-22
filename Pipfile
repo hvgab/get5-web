@@ -8,6 +8,10 @@ django = "*"
 django-ninja = "*"
 rcon = "*"
 django-basic-crud-generator = "*"
+django-service-objects = "*"
+python-a2s = "*"
+requests = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 

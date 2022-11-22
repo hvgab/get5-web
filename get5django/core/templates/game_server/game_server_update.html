@@ -1,6 +1,18 @@
-<h2 class="form-title">Update GameServer</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+
+        <h2 class="title">Update GameServer</h2>
+        <form method="post">
+            <table class="table">
+                {% csrf_token %}
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    </section>
+{% endblock content %}
