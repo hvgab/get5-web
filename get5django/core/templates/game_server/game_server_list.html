@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2 class="form-title">GameServer</h2>
+    
+    <table class="table table-fluid">
+        <thead>
+            <tr>
+                <th>GameServer</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for GameServer in object_list %}
+            <tr>
+                <td>{{ GameServer }}</td>
+                <td><a href="{% url "game_server_detail" GameServer.id %}">view</a></td>
+                <td><a href="{% url "game_server_update" GameServer.id %}">edit</a></td>
+                <td><a href="{% url "game_server_delete" GameServer.id %}">delete</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "game_server_create" %}">New</a>
+</div>
+</div>
+
+{% endblock content %}

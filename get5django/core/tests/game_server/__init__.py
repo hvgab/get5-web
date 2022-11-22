@@ -1,0 +1,5 @@
+from .game_server_delete_test import GameServerDeleteTestCase
+from .game_server_update_test import GameServerUpdateTestCase
+from .game_server_detail_test import GameServerDetailTestCase
+from .game_server_create_test import GameServerCreateTestCase
+from .game_server_list_test import GameServerListTestCase
