@@ -1,8 +1,8 @@
 from rcon.source import Client
-
-server = '10.13.37.22'
-port = 27015
-password = 'telemarkGP5'
+import os
+server = os.getenv('rcon_server')
+port = os.getenv('rcon_port')
+password = os.getenv('rcon_password')
 
 commands = [
     'status',
