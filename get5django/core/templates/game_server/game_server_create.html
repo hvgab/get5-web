@@ -1,7 +1,121 @@
-<h2 class="form-title">Add GameServer</h2>
-    <form class="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit" />
-    </form>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="section">
+    <div class="container">
+
+        <h2 class="title">Add GameServer</h2>
+        <form class="" method="post">
+            <table class="table">
+                {% csrf_token %}
+                {{ form.as_table }}
+            </table>
+            <input class="button" type="submit" value="Submit" />
+        </form>
+
+        <div>
+            <h2 class="title">Find Games on address</h2>
+            <table class="table" id="found_games">
+
+            </table>
+            <script>
+                async function nslookup(input) {
+                    console.log('nslookup');
+                    const url = "/api/nslookup?domain="+input;
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        let rjson = await response.json();
+                        console.log(rjson);
+                        return rjson;
+                    } else {
+                        alert("HTTP-Error: " + response.status);
+                    }
+                }
+
+                async function get_servers_at_address(input) {
+                    console.log('get servers at address');
+                    const url = "/api/get-servers-at-address?address="+input;
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        let rjson = await response.json();
+                        console.log(rjson);
+                        return rjson;
+                    } else {
+                        alert("HTTP-Error: " + response.status);
+                    }
+                }
+
+                async function get_server_info(input) {
+                    console.log('get server info');
+                    const url = "/api/get-server-info?address="+input;
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        let rjson = await response.json();
+                        console.log(rjson);
+                        return rjson;
+                    } else {
+                        alert("HTTP-Error: " + response.status);
+                    }
+                }
+
+                document.addEventListener("DOMContentLoaded", function(event){
+
+                    let timer;
+                    const input = document.querySelector('#id_url');
+                    input.addEventListener("input", function (e) {
+                        console.log("event change!");
+                        // Clears any outstanding timer
+                        clearTimeout(timer);
+                        // Sets new timer that may or may not get cleared
+                        timer = setTimeout(() => {
+                            // Only fires if not cleared
+                            console.log("input: " + input.value);
+                            nslookup(input.value)
+                            .then(
+                                (ipaddress) => {
+                                    console.log("ipaddress: "+ipaddress);
+                                    get_servers_at_address(ipaddress)
+                                    .then(
+                                        (servers) => {
+                                            console.log("servers: ...");
+                                            console.log(servers);
+                                            console.log(servers.response);
+                                            console.log(servers.response.servers);
+                                            for (let i=0; i < servers.response.servers.length; i++) {
+                                                console.log(servers.response.servers[i]);
+                                                get_server_info(servers.response.servers[i].addr)
+                                                    .then(
+                                                        (info) => {
+                                                            console.log("info:::");
+                                                            console.log(info);
+                                                            document.getElementById("found_games").innerHTML += `<tr>\
+                                                                <td>${info.port}</td>\
+                                                                <td>${info.game}</td>\
+                                                                <td>${info.server_name}</td>\
+                                                                <td>${info.map_name}</td>\
+                                                                <td>${info.player_count}/${info.max_players}</td>\
+                                                                <td>${info.keywords}</td>\
+                                                                <td>${info.password_protected}</td>\
+                                                                <td>${info.ping}</td>\
+                                                            </tr>`
+                                                            //JSON.stringify(info);
+                                                            // document.getElementById("found_games").innerHTML += JSON.stringify(info);
+                                                        }
+                                                    )
+                                            }
+                                        }
+                                    );
+                                }
+                            )
+                            //console.log(ipaddress);
+                        }, 2000);
+                    })
+                });
+            </script>
+        </div>
+    </div>
 </div>
+
+{% endblock content %}

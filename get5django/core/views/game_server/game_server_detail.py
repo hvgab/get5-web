@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 class GameServerDetailView(DetailView):
     model = GameServer
     template_name = "game_server/game_server_detail.html"
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,7 +29,14 @@ class GameServerDetailView(DetailView):
             map_name = map_name.split('/')[1]
             logger.debug(map_name)
 
-        context[f"{info['server_name']}_image"] = OgImageService.execute({'url':f'https://steamcommunity.com/sharedfiles/filedetails/?id={map_name}'})
+        if map_name == 'de_dust2':
+            map_name == '125438255'
+        
+        
+        try:
+            context[f"{info['server_name']}_image"] = OgImageService.execute({'url':f'https://steamcommunity.com/sharedfiles/filedetails/?id={map_name}'})
+        except Exception as e:
+            context[f"{info['server_name']}_image"] = 'https://cdn1.dotesports.com/wp-content/uploads/2018/04/09112921/3473c60b-946a-4b95-bc8f-467919ace36f-800x450.jpg'
 
         return context
     

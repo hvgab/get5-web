@@ -35,3 +35,4 @@ class A2sInfoService(Service):
             info = None
         
         return info
+

@@ -7,7 +7,7 @@
                     Game Servers
                 </p>
                 <p class="subtitle">
-                    Primary subtitle 
+                    Primary subtitle
                 </p>
             </div>
         </div>
@@ -18,75 +18,9 @@
                 {% comment %} Main Window {% endcomment %}
                 <div class="column">
                     {% comment %} Cards {% endcomment %}
-                    <div class="columns">
+                    <div class="columns is-multiline">
                         {% for gameserver in gameserver_list %}
-                            <div class="column">
-                                <div class="card">
-                                    <header class="card-header">
-                                        <p class="card-header-title">
-                                            {{ gameserver.get_info.server_name }}
-                                        </p>
-                                    </header>
-                                    <div class="card-image">
-                                        <figure class="image is-2by1">
-                                            {% comment %} <img src="https://static.wikia.nocookie.net/cswikia/images/1/1e/CSGO_Mirage_latest_version.jpg/revision/latest/scale-to-width-down/350?cb=20200301201524" {% endcomment %}
-                                            <img src="{{ gameserver.map_image }}"
-                                                 alt="{{ gameserver.map_image }}">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="columns">
-                                            <div class="column">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon">
-                                                            <i class="mdi mdi-map-marker"></i>
-                                                        </span>
-                                                        {{ gameserver.get_info.map_name }}
-                                                    </li>
-                                                    <li>
-                                                        <span class="icon">
-                                                            <i class="mdi mdi-account-multiple"></i>
-                                                        </span>
-                                                        {{ gameserver.get_info.player_count }} / {{ gameserver.get_info.max_players }}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="column">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon">
-                                                            <i class="mdi mdi-lock {% if gameserver.get_info.password_protected %} has-text-danger {% else %} has-text-success {% endif %}"></i>
-                                                        </span>
-                                                        {% if gameserver.get_info.password_protected %}
-                                                        Password: <code>{{ gameserver.player_password }}</code>
-                                                        {% else %}
-                                                        No Password
-                                                        {% endif %}
-                                                    </li>
-                                                    <li>
-                                                        <span class="icon">
-                                                            <i class="mdi mdi-police-badge {% if gameserver.get_info.vac_enabled %} has-text-success {% endif %}"></i>
-                                                        </span>
-                                                        {% if gameserver.get_info.vac_enabled %}
-                                                        VAC Enabled
-                                                        {% else %}
-                                                        VAC Disabled
-                                                        {% endif %}
-                                                    </li>
-                                                    <li>{{gameserver.test}}</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <footer class="card-footer">
-                                        <a href="steam://connect/{{ gameserver.url }}:{{ gameserver.port }}"
-                                           class="card-footer-item">Join Server</a>
-                                        <a href="#" class="card-footer-item">Watch GOTV</a>
-                                        <a href="#" class="card-footer-item">View Details</a>
-                                    </footer>
-                                </div>
-                            </div>
+                            <div class="column">{% include 'game_server/_game_server_card.html' %}</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -105,13 +39,13 @@
                                 <tr>
                                     <td>{{ GameServer }}</td>
                                     <td>
-                                        <a href="{% url "game_server_detail" GameServer.id %}">view</a>
+                                        <a href="{% url "gameserver_detail" GameServer.id %}">view</a>
                                     </td>
                                     <td>
-                                        <a href="{% url "game_server_update" GameServer.id %}">edit</a>
+                                        <a href="{% url "gameserver_update" GameServer.id %}">edit</a>
                                     </td>
                                     <td>
-                                        <a href="{% url "game_server_delete" GameServer.id %}">delete</a>
+                                        <a href="{% url "gameserver_delete" GameServer.id %}">delete</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -120,7 +54,7 @@
                 </div>
             </div>
             <h2 class="form-title">GameServer</h2>
-            <a href="{% url "game_server_create" %}">New</a>
+            <a href="{% url "gameserver_create" %}">New</a>
         </div>
     </section>
 {% endblock content %}

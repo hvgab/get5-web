@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title">{{ match }}</h2>
+            <ul>
+                <li>game_server : {{ match.game_server  }}</li>
+                <li>team1 : {{ match.team1  }}</li>
+                <li>team2 : {{ match.team2  }}</li>
+                <li>series_type : {{ match.series_type  }}</li>
+                <li>winner : {{ match.winner  }}</li>
+                <li>plugin_version : {{ match.plugin_version  }}</li>
+                <li>forfeit : {{ match.forfeit  }}</li>
+                <li>cancelled : {{ match.cancelled  }}</li>
+                <li>start_time : {{ match.start_time  }}</li>
+                <li>end_time : {{ match.end_time  }}</li>
+                <li>max_maps : {{ match.max_maps  }}</li>
+                <li>title : {{ match.title  }}</li>
+                <li>skip_veto : {{ match.skip_veto  }}</li>
+                <li>api_key : {{ match.api_key  }}</li>
+                <li>veto_mappool : {{ match.veto_mappool  }}</li>
+                <li>team2_score : {{ match.team2_score  }}</li>
+                <li>finalized : {{ match.finalized  }}</li>
+                <li>is_pending : {{ match.is_pending  }}</li>
+                <li>is_finished : {{ match.is_finished  }}</li>
+                <li>is_live : {{ match.is_live  }}</li>
+            </ul>
+        </div>
+    </section>
+{% endblock content %}

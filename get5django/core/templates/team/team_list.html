@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Team</h2>
+            <table class="table table-fluid">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in object_list %}
+                        <tr>
+                            <td>{{ team }}</td>
+                            <td>
+                                <a href="{% url "team_detail" team.id %}">view</a>
+                            </td>
+                            <td>
+                                <a href="{% url "team_update" team.id %}">edit</a>
+                            </td>
+                            <td>
+                                <a href="{% url "team_delete" team.id %}">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url "team_create" %}">New</a>
+        </div>
+    </section>
+{% endblock content %}

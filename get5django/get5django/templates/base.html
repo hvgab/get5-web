@@ -7,13 +7,18 @@
         <title>Document</title>
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
     </head>
     <body>
-        <nav class="navbar container" role="navigation" aria-label="main navigation">
+        <nav class="navbar container"
+             role="navigation"
+             aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="https://bulma.io">
-                    <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+                <a class="navbar-item" href="{% url 'gameserver_index' %}">
+                    <img src="https://bc-gb.com/wp-content/uploads/2016/10/csgo-logo-wallpapers-10.jpg"
+                         width="50"
+                         height="28">
                 </a>
                 <a role="button"
                    class="navbar-burger"
@@ -27,8 +32,31 @@
             </div>
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item">Home</a>
-                    <a class="navbar-item">Documentation</a>
+                    <!-- Game Servers -->
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="{% url 'gameserver_index' %}" class="navbar-link">Game Servers</a>
+                        <div class="navbar-dropdown">
+                            <a href="{% url 'gameserver_list' %}" class="navbar-item">List</a>
+                            <a href="{% url 'gameserver_create' %}" class="navbar-item">New</a>
+                        </div>
+                    </div>
+                    <!-- Teams -->
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="{% url 'team_index' %}" class="navbar-link">Teams</a>
+                        <div class="navbar-dropdown">
+                            <a href="{% url 'team_list' %}" class="navbar-item">List</a>
+                            <a href="{% url 'team_create' %}" class="navbar-item">New</a>
+                        </div>
+                    </div>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="{% url 'match_index' %}" class="navbar-link">Matches</a>
+                        <div class="navbar-dropdown">
+                            <a href="{% url 'match_list' %}" class="navbar-item">List</a>
+                            <a href="{% url 'match_create' %}" class="navbar-item">New</a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item">Report an issue</a>
+                        </div>
+                    </div>
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">More</a>
                         <div class="navbar-dropdown">
@@ -41,14 +69,33 @@
                     </div>
                 </div>
                 <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a class="button is-primary">
-                                <strong>Sign up</strong>
+                    {% if user.is_authenticated %}
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                {{ user }}
+                                &nbsp;
+                                <img src="{{ backends.associated.first.extra_data.player.avatar }}" alt="avatar">
                             </a>
-                            <a class="button is-light">Log in</a>
+                            <div class="navbar-dropdown">
+                                <span class="navbar-item">{{ backends.associated.first.extra_data.player.steamid }}</span>
+                                <a href="{{backends.associated.first.extra_data.player.profileurl}}" class="navbar-item">Go to steam profile</a>
+                                <hr class="navbar-divider">
+                                <a href="{% url 'logout' %}" class="navbar-item">Log Out</a>
+                            </div>
                         </div>
-                    </div>
+                    {% else %}
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a href="{% url "social:begin" "steam" %}" class="button is-primary">
+                                    <strong>Log in with Steam</strong>
+                                </a>
+                                <a href="{% url "social:begin" "steam" %}">
+                                    <img src="https://community.cloudflare.steamstatic.com/public/images/signinthroughsteam/sits_01.png"
+                                         alt="login with steam">
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </nav>

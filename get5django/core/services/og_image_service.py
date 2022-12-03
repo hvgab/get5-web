@@ -18,6 +18,8 @@ class OgImageService(Service):
 
         soup = BeautifulSoup(r.text)
         image = soup.find("meta", property="og:image")
-        image_url = image['content']
-
-        return image_url
+        
+        try:
+            return image['content']
+        except Exception as e:
+            return None

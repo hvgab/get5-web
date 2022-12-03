@@ -1,0 +1,5 @@
+from .match_delete_test import MatchDeleteTestCase
+from .match_update_test import MatchUpdateTestCase
+from .match_detail_test import MatchDetailTestCase
+from .match_create_test import MatchCreateTestCase
+from .match_list_test import MatchListTestCase

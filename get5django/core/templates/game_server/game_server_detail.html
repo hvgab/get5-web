@@ -21,8 +21,44 @@
         </div>
     </section>
     <section class="section">
-        <div class="container">
+        <div class="">
             <div class="columns">
+                <div class="column is-2">
+                    <aside class="menu">
+                        <p class="menu-label">
+                          General
+                        </p>
+                        <ul class="menu-list">
+                          <li><a href="{% url 'gameserver_detail' pk=gameserver.pk %}">Dashboard</a></li>
+                          <li><a href="{% url 'gameserver_rcon' pk=gameserver.pk %}">Rcon</a></li>
+                        </ul>
+                        <p class="menu-label">
+                          Administration
+                        </p>
+                        <ul class="menu-list">
+                          <li><a>Team Settings</a></li>
+                          <li>
+                            <a class="is-active">Manage Your Team</a>
+                            <ul>
+                              <li><a>Members</a></li>
+                              <li><a>Plugins</a></li>
+                              <li><a>Add a member</a></li>
+                            </ul>
+                          </li>
+                          <li><a>Invitations</a></li>
+                          <li><a>Cloud Storage Environment Settings</a></li>
+                          <li><a>Authentication</a></li>
+                        </ul>
+                        <p class="menu-label">
+                          Transactions
+                        </p>
+                        <ul class="menu-list">
+                          <li><a>Payments</a></li>
+                          <li><a>Transfers</a></li>
+                          <li><a>Balance</a></li>
+                        </ul>
+                      </aside>
+                </div>
                 <div class="column">
                     Game Modes
                     <div class="buttons">
@@ -196,8 +232,6 @@ interface Status {
 
 
     "maps": [string] | undefined // 
-
-
 }
 
 Example
@@ -239,7 +273,7 @@ To view user IDs, type users in console. In this example, 43 is the user ID and 
     </p>       
 </article>
                 </div>
-                <div class="column">
+                <div class="column is-narrow">
                     <h1 class="title">GameServer Details</h1>
                     <p class="subtitle">
                         Database
@@ -270,8 +304,7 @@ To view user IDs, type users in console. In this example, 43 is the user ID and 
                             <td>{{ gameserver.rcon_password }}</td>
                         </tr>
                     </table>
-                </div>
-                <div class="column">
+                
                     <h1 class="title">GameServer Details</h1>
                     <p class="subtitle">
                         Query

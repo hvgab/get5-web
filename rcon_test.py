@@ -35,6 +35,7 @@ commands = [
     # 'plugin_unpause', 	# plugin_unpause <index> : unpauses a disabled plugin
     # 'plugin_unpause_all', 	# unpauses all disabled plugins 
 
+    # Cheats
     'replay_death',  # 	start hltv replay of last death
     'replay_start',  # 	Start GOTV replay: replay_start <delay> [<player name or index>]
     'replay_stop',  # 	stop hltv replay 

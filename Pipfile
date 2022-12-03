@@ -12,6 +12,10 @@ django-service-objects = "*"
 python-a2s = "*"
 requests = "*"
 beautifulsoup4 = "*"
+nslookup = "*"
+django-debug-toolbar = "*"
+dj-rest-auth = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <div class="is-pulled-right">
+                    <ul>
+                        <li>{{ gameserver.url }}:{{ gameserver.port }}</li>
+                        <li>
+                            <code>{{ gameserver.rcon_password }}</code>
+                        </li>
+                    </ul>
+                </div>
+                <p class="title">
+                    {{ a2s.info.server_name }}
+                </p>
+                <p class="subtitle">
+                    {{ a2s.info.map_name }} {{ a2s.info.player_count }}/{{ a2s.info.max_players }}
+                </p>
+            </div>
+        </div>
+    </section>
+    <div class="column is-2 is-pulled-left">
+        <aside class="menu">
+            <p class="menu-label">
+                General
+            </p>
+            <ul class="menu-list">
+                <li>
+                    <a href="{% url 'gameserver_detail' pk=gameserver.pk %}">Dashboard</a>
+                </li>
+                <li>
+                    <a href="{% url 'gameserver_rcon' pk=gameserver.pk %}">Rcon</a>
+                </li>
+            </ul>
+            <p class="menu-label">
+                Administration
+            </p>
+            <ul class="menu-list">
+                <li>
+                    <a>Team Settings</a>
+                </li>
+                <li>
+                    <a class="is-active">Manage Your Team</a>
+                    <ul>
+                        <li>
+                            <a>Members</a>
+                        </li>
+                        <li>
+                            <a>Plugins</a>
+                        </li>
+                        <li>
+                            <a>Add a member</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a>Invitations</a>
+                </li>
+                <li>
+                    <a>Cloud Storage Environment Settings</a>
+                </li>
+                <li>
+                    <a>Authentication</a>
+                </li>
+            </ul>
+            <p class="menu-label">
+                Transactions
+            </p>
+            <ul class="menu-list">
+                <li>
+                    <a>Payments</a>
+                </li>
+                <li>
+                    <a>Transfers</a>
+                </li>
+                <li>
+                    <a>Balance</a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+{% endblock content %}

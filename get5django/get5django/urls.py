@@ -17,7 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 
+from core.api import api
+    
 urlpatterns = [
+    path("__debug__/", include('debug_toolbar.urls')), 
     path("admin/", admin.site.urls), 
+    path("auth/", include('social_django.urls', namespace='social')),
+    path("accounts/", include("django.contrib.auth.urls")),  # new
+    path("api/", api.urls),
     path("", include('core.urls')),
-    ]
+]

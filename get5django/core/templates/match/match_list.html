@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="form-title">match</h2>
+            <table class="table table-fluid">
+                <thead>
+                    <tr>
+                        <th>match</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match in object_list %}
+                        <tr>
+                            <td>{{ match }}</td>
+                            <td>
+                                <a href="{% url "match_detail" match.id %}">view</a>
+                            </td>
+                            <td>
+                                <a href="{% url "match_update" match.id %}">edit</a>
+                            </td>
+                            <td>
+                                <a href="{% url "match_delete" match.id %}">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url "match_create" %}">New</a>
+        </div>
+    </div>
+</section>
+{% endblock content %}
