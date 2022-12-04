@@ -1,0 +1,5 @@
+from .player_delete_test import playerDeleteTestCase
+from .player_update_test import playerUpdateTestCase
+from .player_detail_test import playerDetailTestCase
+from .player_create_test import playerCreateTestCase
+from .player_list_test import playerListTestCase

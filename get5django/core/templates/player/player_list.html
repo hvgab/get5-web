@@ -1,43 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-    <section class="hero is-primary is-bold">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">Matches</h1>
-            </div>
-        </div>
-    </section>
     <section class="section">
         <div class="container">
+            <h2 class="title">player</h2>
             <table class="table table-fluid">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Match</th>
+                        <th>player</th>
                         <th>View</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for match in object_list %}
+                    {% for player in object_list %}
                         <tr>
-                            <td>{{ match.id }}</td>
-                            <td>{{ match }}</td>
+                            <td>{{ player }}</td>
                             <td>
-                                <a href="{% url "match_detail" match.id %}">view</a>
+                                <a href="{% url "player_detail" player.id %}">view</a>
                             </td>
                             <td>
-                                <a href="{% url "match_update" match.id %}">edit</a>
+                                <a href="{% url "player_update" player.id %}">edit</a>
                             </td>
                             <td>
-                                <a href="{% url "match_delete" match.id %}">delete</a>
+                                <a href="{% url "player_delete" player.id %}">delete</a>
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <a href="{% url "match_create" %}">New</a>
+            <a href="{% url "player_create" %}">New</a>
         </div>
     </section>
 {% endblock content %}

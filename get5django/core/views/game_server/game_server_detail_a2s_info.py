@@ -9,14 +9,12 @@ from django.views.generic import DetailView
 logger = logging.getLogger(__name__)
 
 
-class GameServerDetailView(DetailView):
+class GameServerDetailA2sInfoView(DetailView):
     model = GameServer
     template_name = "game_server/game_server_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        logger.debug(context["gameserver"])
-
         gameserver = context["gameserver"]
 
         context["info"] = A2sInfoService.execute(
@@ -25,7 +23,7 @@ class GameServerDetailView(DetailView):
 
         context["a2s"] = A2sService.execute({"game_server": gameserver})
 
-        map_name = info["map_name"]
+        map_name = context["info"]["map_name"]
         if "/" in map_name:
             map_name = map_name.split("/")[1]
             logger.debug(map_name)

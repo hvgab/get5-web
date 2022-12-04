@@ -1,0 +1,334 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <div class="is-pulled-right">
+                    <ul>
+                        <li>{{gameserver.url}}:{{gameserver.port}}</li>
+                        <li><code>{{gameserver.rcon_password}}</code></li>
+                    </ul>
+                </div>
+                <p class="title">
+                    {{ a2s.info.server_name }}
+                </p>
+                <p class="subtitle">
+                    {{ a2s.info.map_name}} {{ a2s.info.player_count}}/{{ a2s.info.max_players}}
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title">GameServer Details</h1>
+                    <p class="subtitle">
+                        Database
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ gameserver.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Url</th>
+                            <td>{{ gameserver.url }}</td>
+                        </tr>
+                        <tr>
+                            <th>Port</th>
+                            <td>{{ gameserver.port }}</td>
+                        </tr>
+                        <tr>
+                            <th>SSH User</th>
+                            <td>{{ gameserver.ssh_user }}</td>
+                        </tr>
+                        <tr>
+                            <th>SSH Password</th>
+                            <td>****</td>
+                        </tr>
+                        <tr>
+                            <th>Rcon Password</th>
+                            <td>{{ gameserver.rcon_password }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="column">
+                    <h1 class="title">GameServer Details</h1>
+                    <p class="subtitle">
+                        Query
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>Server Name</th>
+                            <td>{{ a2s.info.server_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Map Name</th>
+                            <td>{{ a2s.info.map_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>player_count</th>
+                            <td>{{ a2s.info.player_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>max_players</th>
+                            <td>{{ a2s.info.max_players }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <th>
+                                port
+                            </th>
+                            <td>
+                                {{ a2s.info.port }}
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>
+                                stv_port
+                            </th>
+                            <td>
+                                {{ a2s.info.stv_port }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                stv_name
+                            </th>
+                            <td>
+                                {{ a2s.info.stv_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                ping
+                            </th>
+                            <td>
+                                {{ a2s.info.ping }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="section">
+        <div class="container">
+            <h2 class="title">
+                Info
+            </h2>
+            <table class="table">
+                <tr>
+                    <th>
+                        Server Name
+                    </th>
+                    <td>
+                        {{ a2s.info.server_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Map Name
+                    </th>
+                    <td>
+                        {{ a2s.info.map_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        game
+                    </th>
+                    <td>
+                        {{ a2s.info.game }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        app_id
+                    </th>
+                    <td>
+                        {{ a2s.info.app_id }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        player_count
+                    </th>
+                    <td>
+                        {{ a2s.info.player_count }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        max_players
+                    </th>
+                    <td>
+                        {{ a2s.info.max_players }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        bot_count
+                    </th>
+                    <td>
+                        {{ a2s.info.bot_count }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        server_type
+                    </th>
+                    <td>
+                        {% if a2s.info.server_type == 'd' %}
+                            Dedicated
+                        {% else %}
+                            {{ a2s.info.server_type }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        platform
+                    </th>
+                    <td>
+                        {% if a2s.info.platform == 'l' %}
+                            Linux
+                        {% else %}
+                            {{ a2s.info.platform }}
+                        </td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th>
+                        password_protected
+                    </th>
+                    <td>
+                        {{ a2s.info.password_protected }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        vac_enabled
+                    </th>
+                    <td>
+                        {{ a2s.info.vac_enabled }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        version
+                    </th>
+                    <td>
+                        {{ a2s.info.version }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        port
+                    </th>
+                    <td>
+                        {{ a2s.info.port }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        steam_id
+                    </th>
+                    <td>
+                        {{ a2s.info.steam_id }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        stv_port
+                    </th>
+                    <td>
+                        {{ a2s.info.stv_port }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        stv_name
+                    </th>
+                    <td>
+                        {{ a2s.info.stv_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        keywords
+                    </th>
+                    <td>
+                        {{ a2s.info.keywords }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        game_id
+                    </th>
+                    <td>
+                        {{ a2s.info.game_id }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        ping
+                    </th>
+                    <td>
+                        {{ a2s.info.ping }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <h2 class="title">
+                Info
+            </h2>
+            <table class="table">
+                {% for key, value in a2s.info %}
+                    <tr>
+                        <th>
+                            {{ key }}
+                        </th>
+                        <td>
+                            {{ value }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    <hr>
+    <section class="section">
+        <div class="container">
+            <h2 class="title">
+                Players
+            </h2>
+            <pre>
+            <code>
+                {{ a2s.players }}
+            </code>
+</pre>
+        </div>
+    </section>
+    <hr>
+    <section class="section">
+        <div class="container">
+            <h2 class="title">
+                Rules
+            </h2>
+            <pre>
+            <code>
+                {{ a2s.rules }}
+            </code>
+        </pre>
+            <table class="table">
+            </table>
+        </div>
+    </section>
+{% endblock content %}
