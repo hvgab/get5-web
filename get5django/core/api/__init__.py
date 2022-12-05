@@ -44,7 +44,7 @@ def post_rcon(request, gameserver_id: int, command: str):
     return RconService.execute({"gameserver": gameserver, "command": command})
 
 
-@api.get("/get5/match/{match_id}")
+@api.get("/get5/match/{match_id}/match_config.json")
 def get5_match(request, match_id: int):
     match = get_object_or_404(Match, id=match_id)
 

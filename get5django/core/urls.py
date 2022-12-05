@@ -1,6 +1,8 @@
 from core.views import (
     GameServerCreateView,
     GameServerDeleteView,
+    GameServerDetailA2sInfoView,
+    GameServerDetailDatabaseView,
     GameServerDetailRconQueryView,
     GameServerDetailView,
     GameServerListView,
@@ -49,6 +51,11 @@ gameserver_urlpatterns = [
         "game-server/<int:pk>/delete/",
         GameServerDeleteView.as_view(),
         name="gameserver_delete",
+    ),
+    path(
+        "game-server/<int:pk>/database",
+        GameServerDetailDatabaseView.as_view(),
+        name="gameserver_database",
     ),
     path(
         "game-server/<int:pk>/rcon",

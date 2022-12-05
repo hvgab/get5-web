@@ -53,9 +53,9 @@ class GameServerDetailRconQueryView(FormView, SingleObjectMixin):
         logger.debug("End: Get Context Data")
         return context
 
-    def form_valid(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
 
-        form = self.form_class(self.request.POST)
+        # form = self.form_class(self.request.POST)
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
         cd = form.cleaned_data

@@ -25,7 +25,7 @@ class GameServerDetailView(DetailView):
 
         context["a2s"] = A2sService.execute({"game_server": gameserver})
 
-        map_name = info["map_name"]
+        map_name = context["info"]["map_name"]
         if "/" in map_name:
             map_name = map_name.split("/")[1]
             logger.debug(map_name)
@@ -34,14 +34,14 @@ class GameServerDetailView(DetailView):
             map_name == "125438255"
 
         try:
-            context[f"{info['server_name']}_image"] = OgImageService.execute(
+            context[f'{context["info"]["server_name"]}_image'] = OgImageService.execute(
                 {
                     "url": f"https://steamcommunity.com/sharedfiles/filedetails/?id={map_name}"
                 }
             )
         except Exception as e:
             context[
-                f"{info['server_name']}_image"
+                f'{context["info"]["server_name"]}_image'
             ] = "https://cdn1.dotesports.com/wp-content/uploads/2018/04/09112921/3473c60b-946a-4b95-bc8f-467919ace36f-800x450.jpg"
 
         return context

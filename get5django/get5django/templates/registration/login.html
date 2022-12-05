@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="hero is-fullheight has-background-light">
+        <div class="hero-body">
+            {% comment %} <div class="columns"> {% endcomment %}
+            <div class="column is-4 is-offset-4">
+                <div class="box">
+                    <h2 class="title">Log In</h2>
+                    <form method="post">
+                        <table class="table">
+                            {% csrf_token %}
+                            {{ form.as_table }}
+                        </table>
+                        <button class="button" type="submit">Log In</button>
+                    </form>
+                    <hr/>
+                    <a href="{% url "social:begin" "steam" %}" class="button is-primary">
+                        <strong>Log in with Steam</strong>
+                    </a>
+                </div>
+            </div>
+            {% comment %} </div> {% endcomment %}
+        </div>
+    </section>
+{% endblock content %}
