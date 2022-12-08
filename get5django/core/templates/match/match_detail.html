@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block title %}
+    Match #{{ match.id }}
+{% endblock title %}
 {% block content %}
     <div class="hero is-primary is-bold has-text-centered">
         <div class="hero-body">
@@ -98,7 +101,7 @@
             </div>
         </div>
     {% endif %}
-    <section class="section">
+    <section class="section has-background-white">
         <div class="container">
             <h2 class="title">Match Setup</h2>
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -176,6 +179,42 @@
                 </tr>
             </table>
             <a href="{% url 'match_update' pk=match.pk %}" class="button">Edit Match</a>
+        </div>
+    </section>
+    <section class="section has-background-light">
+        <div class="container">
+            <div class="columns is-multiline">
+                <div class="column has-text-centered">
+                    <div class="block">
+                        <a class="button is-large is-primary"
+                           href="steam://connect/{{ match.game_server.url }}:{{ match.game_server.port }}">
+                            <span class="icon">
+                                <i class="mdi mdi-gamepad"></i>
+                            </span>
+                            <span>Connect to game</span>
+                        </a>
+                        <br>
+                        <a href="steam://connect/{{ match.game_server.url }}:{{ match.game_server.port }}">steam://connect/{{ match.game_server.url }}:{{ match.game_server.port }}</a>
+                        <br>
+                        <code>connect {{ match.game_server.url }}:{{ match.game_server.port }}</code>
+                    </div>
+                </div>
+                <div class="column has-text-centered">
+                    <div class="block">
+                        <a class="button is-large is-link"
+                           href="steam://connect/{{ match.game_server.url }}:{{ match.game_server.get_info.stv_port }}">
+                            <span class="icon">
+                                <i class="mdi mdi-television-classic"></i>
+                            </span>
+                            <span>Connect to GOTV</span>
+                        </a>
+                        <br>
+                        <a href="steam://connect/{{ match.game_server.url }}:{{ match.game_server.port }}">Connect to GOTV</a>
+                        <br>
+                        <code>connect {{ match.game_server.url }}:{{ match.game_server.port }}</code>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <section class="section has-background-white">
@@ -400,7 +439,7 @@
                             const rconFeed = document.getElementById('rconFeed');
                             const today = new Date();
                             rconFeed.insertAdjacentHTML('afterbegin', `<div class="message"><div class="message-header"><span class="message-command">${command}</span><span class="is-pulled-right message-time">${today.toISOString()}</span></div><div class="message-body"><pre style="background-color:transparent;">${data}</pre></div></div>`);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
                     </script>
                 </div>
                 <div class="column">
@@ -413,235 +452,4 @@
             </div>
         </div>
     </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-        </div>
-    </section>
-    <section class="section">
-        <section class="section">
-            <div class="container">
-                <h2 class="title">
-                    <strong>Manual</strong> Server Admin
-                </h2>
-                <ol>
-                    <li>
-                        Open the <a href="{% url 'gameserver_rcon' pk=match.game_server.pk %}">Game Server RCON Page</a> in a new tab.
-                    </li>
-                    <li>
-                        Enter
-                        <pre><code>get5_loadmatch_url "http://tourny.gabbeh.no/api/get5/match_config/{{ match.id }}</code></pre>
-                    </li>
-                    <li>
-                        The Response should be:
-                        <br>
-                        <pre><code>"Loading match configuration..."</code></pre>
-                    </li>
-                    <li>
-                        Enter <code>get5_status</code>
-                        The response should be something like
-                        <br>
-                        <pre>
-    <code>{"matchid": "1","team2": {...},"team1": {...}, ...}
-    L 12/07/2022 - 21:01:59: rcon from "10.13.37.144:61045": command "get5_status"</code>
-    </pre>
-                    </li>
-                </ol>
-                <button class="button">
-                    Load Config (Start Match)
-                </button>
-            </div>
-        </section>
-        <div class="container">
-            <h2 class="title">
-                Match Status
-            </h2>
-            <table class="table">
-                <tr>
-                    <th>
-                        series_type
-                    </th>
-                    <td>
-                        {{ match.series_type }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        winner
-                    </th>
-                    <td>
-                        {{ match.winner }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        plugin_version
-                    </th>
-                    <td>
-                        {{ match.plugin_version }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        forfeit
-                    </th>
-                    <td>
-                        {{ match.forfeit }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        cancelled
-                    </th>
-                    <td>
-                        {{ match.cancelled }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        finished
-                    </th>
-                    <td>
-                        {{ match.finished }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        start_time
-                    </th>
-                    <td>
-                        {{ match.start_time }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        end_time
-                    </th>
-                    <td>
-                        {{ match.end_time }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        max_maps
-                    </th>
-                    <td>
-                        {{ match.max_maps }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        title
-                    </th>
-                    <td>
-                        {{ match.title }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        api_key
-                    </th>
-                    <td>
-                        {{ match.api_key }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        veto_mappool
-                    </th>
-                    <td>
-                        {{ match.veto_mappool }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        team1_score
-                    </th>
-                    <td>
-                        {{ match.team1_score }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        team2_score
-                    </th>
-                    <td>
-                        {{ match.team2_score }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        finalized
-                    </th>
-                    <td>
-                        {{ match.finalized }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        is_pending
-                    </th>
-                    <td>
-                        {{ match.is_pending }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        is_finished
-                    </th>
-                    <td>
-                        {{ match.is_finished }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        is_live
-                    </th>
-                    <td>
-                        {{ match.is_live }}
-                    </td>
-                </tr>
-            </table>
-        </section>
-        <section class="section">
-        </section>
-        <section class="section">
-        </section>
-        <section class="section">
-        </section>
-        <section class="section">
-        </section>
-        <section class="section">
-        </section>
-        <section class="section">
-        </section>
-        <section class="section">
-        </section>
-    {% endblock content %}
+{% endblock content %}

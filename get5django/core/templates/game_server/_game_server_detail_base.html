@@ -1,76 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}
+    {{ gameserver }}
+{% endblock title %}
 {% block content %}
     {% include 'game_server/_game_server_detail_header.html' %}
-    <div class="column is-2 is-pulled-left">
-        <aside class="menu">
-            <p class="menu-label">
-                General
-            </p>
-            <ul class="menu-list">
-                <li>
-                    <a href="{% url 'gameserver_detail' pk=gameserver.pk %}">Dashboard</a>
-                </li>
-                <li>
-                    <a href="{% url 'gameserver_database' pk=gameserver.pk %}">View DB</a>
-                </li>
-                <li>
-                    <a href="{% url 'gameserver_update' pk=gameserver.pk %}">Update</a>
-                </li>
-                <li>
-                    <a href="{% url 'gameserver_delete' pk=gameserver.pk %}">Delete</a>
-                </li>
-                <li>
-                    <a href="{% url 'gameserver_a2s_info' pk=gameserver.pk %}">A2S Info</a>
-                </li>
-                <li>
-                    <a href="{% url 'gameserver_rcon' pk=gameserver.pk %}">Rcon</a>
-                </li>
-            </ul>
-            <p class="menu-label">
-                Administration
-            </p>
-            <ul class="menu-list">
-                <li>
-                    <a>Team Settings</a>
-                </li>
-                <li>
-                    <a class="is-active">Manage Your Team</a>
-                    <ul>
-                        <li>
-                            <a>Members</a>
-                        </li>
-                        <li>
-                            <a>Plugins</a>
-                        </li>
-                        <li>
-                            <a>Add a member</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Invitations</a>
-                </li>
-                <li>
-                    <a>Cloud Storage Environment Settings</a>
-                </li>
-                <li>
-                    <a>Authentication</a>
-                </li>
-            </ul>
-            <p class="menu-label">
-                Transactions
-            </p>
-            <ul class="menu-list">
-                <li>
-                    <a>Payments</a>
-                </li>
-                <li>
-                    <a>Transfers</a>
-                </li>
-                <li>
-                    <a>Balance</a>
-                </li>
-            </ul>
-        </aside>
-    </div>
+    <div class="column is-2 is-pulled-left">{% include 'game_server/_game_server_menu.html' %}</div>
 {% endblock content %}

@@ -1,4 +1,3 @@
-from core.services.a2s_info_service import A2sInfoService
 from django.db import models
 
 
@@ -32,11 +31,19 @@ class GameServer(models.Model):
         return self.url
 
     def get_info(self):
-        if self.internal_url is not None:
-            return A2sInfoService.execute(
-                {"address": f"{self.internal_url}:{self.port}"}
-            )
-        return A2sInfoService.execute({"address": f"{self.url}:{self.port}"})
+        from core.services.a2s_info_service import A2sInfoService
+
+        return A2sInfoService.execute({"gameserver": self})
+
+    def get_players(self):
+        from core.services.a2s_player_service import A2sPlayerService
+
+        return A2sPlayerService.execute({"gameserver": self})
+
+    def get_rules(self):
+        from core.services.a2s_rules_service import A2sRulesService
+
+        return A2sRulesService.execute({"gameserver": self})
 
 
 class Player(models.Model):
