@@ -14,6 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Date</th>
+                        <th>Server</th>
                         <th>Match</th>
                         <th>View</th>
                         <th>Edit</th>
@@ -25,6 +26,7 @@
                         <tr>
                             <td>{{ match.id }}</td>
                             <td>{{ match.match_date_time | date:"Y-m-d H:i:s" }}</td>
+                            <td>{{ match.game_server }}</td>
                             <td>{{ match }}</td>
                             <td>
                                 <a href="{% url "match_detail" match.id %}">view</a>
