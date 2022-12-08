@@ -1,12 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'game_server/_game_server_detail_base.html' %}
 {% block content %}
-    {% include 'game_server/_game_server_header_single.html' %}
+    {{ block.super }}
     <section class="section">
         <div class="container">
             <div class="columns">
                 <div class="column">
                     <h1 class="title">GameServer Details</h1>
-                    <p class="subtitle">Database</p>
+                    <p class="subtitle">
+                        Database
+                    </p>
                     {% include 'game_server/_game_server_db_table.html' %}
                 </div>
             </div>

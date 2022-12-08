@@ -1,0 +1,66 @@
+<div class="card">
+    <header class="card-header">
+        <p class="card-header-title">[{{ team.tag }}] {{ team.name }}</p>
+    </header>
+    {% comment %}
+    <div class="card-image">
+        <figure class="image is-2by1">
+            <a href="{% url 'team_detail' pk=team.pk %}">
+                <img src="" alt="">
+            </a>
+        </figure>
+    </div> 
+    {% endcomment %}
+    <div class="card-content">
+        <div class="media my-0 py-0">
+            <figure class="media-left">
+                <p class="image is-32x32">
+                    {% if team.player1.avatar %}
+                        <img src="{{ team.player1.avatar }}" alt="avatar"/>
+                    {% else %}
+                        <i class="mdi mdi-account mdi-36px" style="line-height: 1;"></i>
+                    {% endif %}
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    {% if team.player1 %}
+                        <p>
+                            {{ team.player1.personaname }}
+                            <a href="{{ team.player1.profileurl }}">
+                                <span class="icon is-small"><i class="mdi mdi-steam"></i></span>
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="media my-0 py-0">
+            <figure class="media-left">
+                <p class="image is-32x32">
+                    {% if team.player2.avatar %}
+                        <img src="{{ team.player2.avatar }}" alt="avatar"/>
+                    {% else %}
+                        <i class="mdi mdi-account mdi-36px" style="line-height: 1;"></i>
+                    {% endif %}
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    {% if team.player2 %}
+                        <p>
+                            {{ team.player2.personaname }}
+                            <a href="{{ team.player2.profileurl }}">
+                                <span class="icon is-small"><i class="mdi mdi-steam"></i></span>
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <a href="{% url 'team_detail' pk=team.pk %}" class="card-footer-item">View</a>
+        <a href="{% url 'team_update' pk=team.pk %}" class="card-footer-item">Edit</a>
+    </footer>
+</div>

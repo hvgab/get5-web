@@ -1,3 +1,4 @@
+import logging
 import socket
 
 import requests
@@ -5,9 +6,10 @@ from core.models import GameServer, Match
 from core.services.a2s_info_service import A2sInfoService
 from core.services.rcon_service import RconService
 from django.shortcuts import get_object_or_404
-from ninja import NinjaAPI
+from ninja import NinjaAPI, Schema
 from nslookup import Nslookup
 
+logger = logging.getLogger(__name__)
 api = NinjaAPI()
 
 
@@ -38,13 +40,29 @@ def get_server_info(request, address: str):
     return info
 
 
+class RconSchema(Schema):
+    command: str = "status"
+
+
 @api.post("/gameserver/{gameserver_id}/rcon")
-def post_rcon(request, gameserver_id: int, command: str):
+def post_rcon(request, gameserver_id: int, data: RconSchema):
+    logger.debug("gameserver post rcon")
     gameserver = GameServer.objects.get(id=gameserver_id)
-    return RconService.execute({"gameserver": gameserver, "command": command})
+
+    logger.debug("gameserver")
+    logger.debug(gameserver)
+
+    logger.debug("data.command:")
+    logger.debug(data.command)
+
+    rcon = RconService.execute({"gameserver": gameserver, "command": data.command})
+    logger.debug("rcon response")
+    logger.debug(rcon)
+
+    return rcon
 
 
-@api.get("/get5/match/{match_id}/match_config.json")
+@api.get("/get5/match_config/{match_id}")
 def get5_match(request, match_id: int):
     match = get_object_or_404(Match, id=match_id)
 
@@ -73,8 +91,8 @@ def get5_match(request, match_id: int):
         team2_players.append(match.team1.player5)
 
     response = {
-        # "match_title": "Astralis vs. NaVi",
-        # "matchid": "3123",
+        "match_title": match.title,
+        "matchid": str(match.id),
         "clinch_series": True,
         "num_maps": match.num_maps,
         "players_per_team": match.players_per_team,
@@ -99,7 +117,7 @@ def get5_match(request, match_id: int):
             "name": match.team1.name,
             "tag": match.team1.tag,
             "flag": "NO",
-            "logo": "astr",
+            "logo": "gp",
             "players": [
                 match.team1.player1,
                 match.team1.player2,
@@ -112,7 +130,7 @@ def get5_match(request, match_id: int):
             "name": match.team2.name,
             "tag": match.team2.tag,
             "flag": "NO",
-            "logo": "astr",
+            "logo": "gp",
             "players": [
                 match.team2.player1,
                 match.team2.player2,

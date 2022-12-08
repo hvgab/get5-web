@@ -1,26 +1,36 @@
-
 {% extends 'base.html' %}
-
 {% block content %}
-
-<div class="section">
-    <div class="container">
-
-        <h2 class="title">Add GameServer</h2>
-        <form class="" method="post">
-            <table class="table">
-                {% csrf_token %}
-                {{ form.as_table }}
-            </table>
-            <input class="button" type="submit" value="Submit" />
-        </form>
-
-        <div>
-            <h2 class="title">Find Games on address</h2>
-            <table class="table" id="found_games">
-
-            </table>
-            <script>
+    <div class="section">
+        <div class="">
+            <div class="columns">
+                <div class="column is-narrow">
+                    <h2 class="title">Add GameServer</h2>
+                    <form class="" method="post">
+                        <table class="table">
+                            {% csrf_token %}
+                            {{ form.as_table }}
+                        </table>
+                        <input class="button" type="submit" value="Submit" />
+                    </form>
+                </div>
+                <div class="column">
+                    <div>
+                        <h2 class="title">Find Games on address</h2>
+                        <div class="table-container">
+                            <table class="table is-narrow is-fullwidth" id="found_games">
+                                <tr>
+                                    <th>Port</th>
+                                    <th>Game</th>
+                                    <th>Name</th>
+                                    <th>Map</th>
+                                    <th>Players</th>
+                                    <th>Tags</th>
+                                    <th>Password</th>
+                                    <th>Ping</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <script>
                 async function nslookup(input) {
                     console.log('nslookup');
                     const url = "/api/nslookup?domain="+input;
@@ -113,9 +123,10 @@
                         }, 2000);
                     })
                 });
-            </script>
+                        </script>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
 {% endblock content %}

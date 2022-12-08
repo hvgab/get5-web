@@ -36,11 +36,10 @@ class GameServerDetailRconQueryView(FormView, SingleObjectMixin):
         if "rcon_response" in kwargs:
             context["rcon_response"] = kwargs.get("rcon_response")
 
-        info = A2sInfoService.execute(
-            {"address": f"{gameserver.url}:{gameserver.port}"}
-        )
+        info = gameserver.get_info()
+
         context["info"] = info
-        context["a2s"] = A2sService.execute({"game_server": gameserver})
+        context["a2s"] = A2sService.execute({"gameserver": gameserver})
         map_name = info["map_name"]
         if "/" in map_name:
             map_name = map_name.split("/")[1]

@@ -17,11 +17,9 @@ class GameServerDetailA2sInfoView(DetailView):
         context = super().get_context_data(**kwargs)
         gameserver = context["gameserver"]
 
-        context["info"] = A2sInfoService.execute(
-            {"address": f"{gameserver.url}:{gameserver.port}"}
-        )
+        context["info"] = gameserver.get_info()
 
-        context["a2s"] = A2sService.execute({"game_server": gameserver})
+        context["a2s"] = A2sService.execute({"gameserver": gameserver})
 
         map_name = context["info"]["map_name"]
         if "/" in map_name:
@@ -32,14 +30,14 @@ class GameServerDetailA2sInfoView(DetailView):
             map_name == "125438255"
 
         try:
-            context[f"{info['server_name']}_image"] = OgImageService.execute(
+            context[f"{context['info']['server_name']}_image"] = OgImageService.execute(
                 {
                     "url": f"https://steamcommunity.com/sharedfiles/filedetails/?id={map_name}"
                 }
             )
         except Exception as e:
             context[
-                f"{info['server_name']}_image"
+                f"{context['info']['server_name']}_image"
             ] = "https://cdn1.dotesports.com/wp-content/uploads/2018/04/09112921/3473c60b-946a-4b95-bc8f-467919ace36f-800x450.jpg"
 
         return context

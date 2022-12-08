@@ -1,30 +1,647 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
+    <div class="hero is-primary is-bold has-text-centered">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    {{ match }}
+                    {% comment %} {% if match.game_server %}@ {{ match.game_server }}{% endif %} {% endcomment %}
+                </h1>
+            </div>
+        </div>
+    </div>
     <section class="section">
         <div class="container">
-            <h2 class="title">{{ match }}</h2>
-            <ul>
-                <li>game_server : {{ match.game_server  }}</li>
-                <li>team1 : {{ match.team1  }}</li>
-                <li>team2 : {{ match.team2  }}</li>
-                <li>series_type : {{ match.series_type  }}</li>
-                <li>winner : {{ match.winner  }}</li>
-                <li>plugin_version : {{ match.plugin_version  }}</li>
-                <li>forfeit : {{ match.forfeit  }}</li>
-                <li>cancelled : {{ match.cancelled  }}</li>
-                <li>start_time : {{ match.start_time  }}</li>
-                <li>end_time : {{ match.end_time  }}</li>
-                <li>max_maps : {{ match.max_maps  }}</li>
-                <li>title : {{ match.title  }}</li>
-                <li>skip_veto : {{ match.skip_veto  }}</li>
-                <li>api_key : {{ match.api_key  }}</li>
-                <li>veto_mappool : {{ match.veto_mappool  }}</li>
-                <li>team2_score : {{ match.team2_score  }}</li>
-                <li>finalized : {{ match.finalized  }}</li>
-                <li>is_pending : {{ match.is_pending  }}</li>
-                <li>is_finished : {{ match.is_finished  }}</li>
-                <li>is_live : {{ match.is_live  }}</li>
-            </ul>
+            <nav class="level is-mobile">
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Match ID</p>
+                        <p class="title">{{ match.id }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Game Server</p>
+                        <p class="title">{{ match.game_server }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Date</p>
+                        <p class="title">{{ match.match_date_time|date:'d.m.Y' }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Time</p>
+                        <p class="title">{{ match.match_date_time|date:'H:i:s' }}</p>
+                    </div>
+                </div>
+            </nav>
         </div>
     </section>
-{% endblock content %}
+    <section class="section has-background-dark has-text-light">
+        <div class="container">
+            <div class="columns">
+                <div class="column">{% include "team/_team_card.html" with team=match.team1 %}</div>
+                <div class="column has-text-centered">
+                    <div class="is-align-content-center">
+                        <span class="has-text-weight-bold" style="font-size: 10rem">VS</span>
+                    </div>
+                </div>
+                <div class="column">{% include "team/_team_card.html" with team=match.team2 %}</div>
+            </div>
+        </div>
+    </section>
+    {# Check if match has game server set #}
+    {% if not match.game_server %}
+        <div class="section has-background-danger-dark">
+            <div class="container">
+                <h1 class="title has-text-light">ERROR!</h1>
+                <article class="message is-danger">
+                    <div class="message-header">
+                        <p>Missing Game Server</p>
+                    </div>
+                    <div class="message-body">
+                        This match does not have a set game server!
+                        <br\>
+                        Edit the match and add a game server before match start.
+                        <br\>
+                        <a href="{% url 'match_update' pk=match.pk %}" class="button">Update Match</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    {% endif %}
+    {# Get5 Available #}
+    {% if get5_web_available.error is not None %}
+        <div class="section has-background-danger-dark">
+            <div class="container">
+                <h1 class="title has-text-light">ERROR!</h1>
+                <article class="message is-danger">
+                    <div class="message-header">
+                        <p>Get5 Web Api is not enabled!</p>
+                    </div>
+                    {% comment %} <div class="message-body">{{ match.game_server.get5_web_available }}</div> {% endcomment %}
+                    <div class="message-body">
+                        <p>
+                            Response: <code>{{ get5_web_available.response }}</code>
+                        </p>
+                        <p>
+                            Log: <code>{{ get5_web_available.log }}</code>
+                        </p>
+                        <p>
+                            Error: <code>{{ get5_web_available.error }}</code>
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    {% endif %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Match Setup</h2>
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <th>game_server</th>
+                    <td>{{ match.game_server }}</td>
+                </tr>
+                <tr>
+                    <th>match_title</th>
+                    <td>{{ match.match_title }}</td>
+                </tr>
+                <tr>
+                    <th>match_date_time</th>
+                    <td>{{ match.match_date_time }}</td>
+                </tr>
+                <tr>
+                    <th>
+                        clinch_series
+                    </th>
+                    <td>
+                        {{ match.clinch_series }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        num_maps
+                    </th>
+                    <td>
+                        {{ match.num_maps }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        players_per_team
+                    </th>
+                    <td>
+                        {{ match.players_per_team }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        skip_veto
+                    </th>
+                    <td>
+                        {{ match.skip_veto }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        maplist
+                    </th>
+                    <td>
+                        {{ match.maplist }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        team1
+                    </th>
+                    <td>
+                        {{ match.team1 }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        team2
+                    </th>
+                    <td>
+                        {{ match.team2 }}
+                    </td>
+                </tr>
+            </table>
+            <a href="{% url 'match_update' pk=match.pk %}" class="button">Edit Match</a>
+        </div>
+    </section>
+    <section class="section has-background-white">
+        <div class="container">
+            <h2 class="title">
+                Server Admin
+            </h2>
+            <div class="columns">
+                <div class="column">
+                    <h3 class="title">
+                        Issue RCON Commands
+                    </h3>
+                    <div id="rcon-buttons">
+                        <div class="buttons">
+                            <button id="load-match-button"
+                                    data-command='get5_loadmatch_url'
+                                    class="rcon-button button is-fullwidth is-success">
+                                Load Match
+                            </button>
+                            <button id="rcon-status-button"
+                                    data-command="status"
+                                    class="rcon-button button is-fullwidth is-info">
+                                Status
+                            </button>
+                            <button id="rcon-get5-status-button"
+                                    data-command="get5_status"
+                                    class="rcon-button button is-fullwidth is-info">
+                                Get5 Status
+                            </button>
+                        </div>
+                        <div class="buttons has-addons">
+                            <button id="rcon-sm-pause"
+                                    data-command="sm_pause"
+                                    class="rcon-button button is-warning"
+                                    style="flex:auto">
+                                GET5/SM ADMIN PAUSE
+                            </button>
+                            <button id="rcon-sm-unpause"
+                                    data-command="sm_unpause"
+                                    class="rcon-button button is-success"
+                                    style="flex:auto">
+                                GET5/SM ADMIN *UN*PAUSE
+                            </button>
+                        </div>
+                        <div class="buttons">
+                            <button id="rcon-sm-stop"
+                                    data-command="sm_stop"
+                                    class="rcon-button button is-fullwidth is-danger">
+                                GET5 STOP: stop round and load backup
+                            </button>
+                            <button id="rcon-get5-list-backups"
+                                    data-command="get5_listbackups"
+                                    class="rcon-button button is-fullwidth">
+                                Get5 List backups
+                            </button>
+                            <button id="rcon-get5-loadbackup"
+                                    data-command="get5_loadbackup"
+                                    class="rcon-button button is-fullwidth">
+                                Get5 Loadbackup: Load backup for *current* round
+                            </button>
+                        </div>
+                        <script>
+                        </script>
+                    </div>
+                    <hr>
+                    <div id="rcon-form">
+                        <div class="field">
+                            <label class="label">
+                                Manual RCON
+                            </label>
+                            <div class="control">
+                                <input id="manualRconInput"
+                                       class="input"
+                                       type="text"
+                                       placeholder="Text input">
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button id="manualRcon" class="button is-link">
+                                    Submit
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-light">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                Andre kommandoer:
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <code>get5_loadbackup  &lt;filename&gt;</code>
+                                        </td>
+                                        <td>
+                                            Loads a match backup, relative to the csgo directory. Requires that the backup system is enabled. If you define get5_backup_path, you must include the path in the filename.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>get5_last_backup_file</code>
+                                        </td>
+                                        <td>
+                                            Prints the name of the last match backup file Get5 wrote in the current series, this is automatically updated each time a backup file is written. Empty string if no backup was written.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>get5_loadmatch_url &lt;url&gt; [header name] [header value]</code>
+                                        </td>
+                                        <td>
+                                            Loads a remote (JSON-formatted) match configuration by sending an HTTP(S) GET to the given URL. You may optionally provide an HTTP header and value pair using the header name and header value arguments. You should put all arguments inside quotation marks ("").
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>get5_addplayer &lt;auth&gt; &lt;team1|team2|spec&gt; [name]</code>
+                                        </td>
+                                        <td>
+                                            Adds a Steam ID to a team (can be any format for the Steam ID). The name parameter optionally locks the player's name.
+                                        </td>
+                                        <td>
+                                            Hvis det plutselig skulle bli endringer på hvilke spillere som er på hvilke lag.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>get5_status</code>
+                                        </td>
+                                        <td>
+                                            Replies with JSON formatted match state (available to all clients).
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>get5_listbackups [matchid]</code>
+                                        </td>
+                                        <td>
+                                            Lists backup files for the current match or a given match ID if provided. If you define get5_backup_path, it will only list backups found under that prefix.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>sm_pause / sm_unpause</code>
+                                        </td>
+                                        <td>
+                                            As a server admin, you can pause the match at any time and with no time restrictions, but you cannot use mp_pause_match (or its unpause equivalent) at any stage. Due to the way Get5 handles pausing, you must use sm_pause in the console, since this will track all details and configurations related to pausing in the system. Similarly, sm_unpause must be used to unpause. Pauses initiated by administrators via console cannot be !unpause'ed by players. Also note that an admin pause event is fired when the game is paused during veto.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </div>
+                    </div>
+                    <script>
+                        {# Add event listeners for premade buttons #}
+                        const buttons = document.getElementsByClassName("rcon-button");
+                        for (i=0; i<buttons.length; i++){
+                            buttons[i].addEventListener('click', buttonToRcon)
+                        }
+
+                        {# Manual Rcon with input #}
+                        document.getElementById("manualRcon").addEventListener("click", inputToSendRcon);
+
+                        function buttonToRcon(e) {
+                            console.log(e);
+                            console.log(e.target);
+                            console.log(e.target.dataset.command);
+                            const command = e.target.dataset.command;
+                            if (command == 'status'){
+                                console.log('example for later');
+                            }
+                            sendRcon(command);
+                        }
+
+                        function inputToSendRcon(e) {
+                            const manualRconInput = document.getElementById('manualRconInput');
+                            sendRcon(manualRconInput.value);
+                        }
+
+                        function sendRcon(command) {
+                            fetch("/api/gameserver/{{match.game_server.id}}/rcon", {
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        command: command
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(function(data) {
+                                    console.log(data)
+                                    addToFeed(command, data)
+                                });
+                        }
+
+                        function addToFeed(command, data) {
+                            const rconFeed = document.getElementById('rconFeed');
+                            const today = new Date();
+                            rconFeed.insertAdjacentHTML('afterbegin', `<div class="message"><div class="message-header"><span class="message-command">${command}</span><span class="is-pulled-right message-time">${today.toISOString()}</span></div><div class="message-body"><pre style="background-color:transparent;">${data}</pre></div></div>`);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                    </script>
+                </div>
+                <div class="column">
+                    <h3 class="title">
+                        RCON Responses
+                    </h3>
+                    <div id="rconFeed">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+    <section class="section">
+        <section class="section">
+            <div class="container">
+                <h2 class="title">
+                    <strong>Manual</strong> Server Admin
+                </h2>
+                <ol>
+                    <li>
+                        Open the <a href="{% url 'gameserver_rcon' pk=match.game_server.pk %}">Game Server RCON Page</a> in a new tab.
+                    </li>
+                    <li>
+                        Enter
+                        <pre><code>get5_loadmatch_url "http://tourny.gabbeh.no/api/get5/match_config/{{ match.id }}</code></pre>
+                    </li>
+                    <li>
+                        The Response should be:
+                        <br>
+                        <pre><code>"Loading match configuration..."</code></pre>
+                    </li>
+                    <li>
+                        Enter <code>get5_status</code>
+                        The response should be something like
+                        <br>
+                        <pre>
+    <code>{"matchid": "1","team2": {...},"team1": {...}, ...}
+    L 12/07/2022 - 21:01:59: rcon from "10.13.37.144:61045": command "get5_status"</code>
+    </pre>
+                    </li>
+                </ol>
+                <button class="button">
+                    Load Config (Start Match)
+                </button>
+            </div>
+        </section>
+        <div class="container">
+            <h2 class="title">
+                Match Status
+            </h2>
+            <table class="table">
+                <tr>
+                    <th>
+                        series_type
+                    </th>
+                    <td>
+                        {{ match.series_type }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        winner
+                    </th>
+                    <td>
+                        {{ match.winner }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        plugin_version
+                    </th>
+                    <td>
+                        {{ match.plugin_version }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        forfeit
+                    </th>
+                    <td>
+                        {{ match.forfeit }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        cancelled
+                    </th>
+                    <td>
+                        {{ match.cancelled }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        finished
+                    </th>
+                    <td>
+                        {{ match.finished }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        start_time
+                    </th>
+                    <td>
+                        {{ match.start_time }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        end_time
+                    </th>
+                    <td>
+                        {{ match.end_time }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        max_maps
+                    </th>
+                    <td>
+                        {{ match.max_maps }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        title
+                    </th>
+                    <td>
+                        {{ match.title }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        api_key
+                    </th>
+                    <td>
+                        {{ match.api_key }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        veto_mappool
+                    </th>
+                    <td>
+                        {{ match.veto_mappool }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        team1_score
+                    </th>
+                    <td>
+                        {{ match.team1_score }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        team2_score
+                    </th>
+                    <td>
+                        {{ match.team2_score }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        finalized
+                    </th>
+                    <td>
+                        {{ match.finalized }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        is_pending
+                    </th>
+                    <td>
+                        {{ match.is_pending }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        is_finished
+                    </th>
+                    <td>
+                        {{ match.is_finished }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        is_live
+                    </th>
+                    <td>
+                        {{ match.is_live }}
+                    </td>
+                </tr>
+            </table>
+        </section>
+        <section class="section">
+        </section>
+        <section class="section">
+        </section>
+        <section class="section">
+        </section>
+        <section class="section">
+        </section>
+        <section class="section">
+        </section>
+        <section class="section">
+        </section>
+        <section class="section">
+        </section>
+    {% endblock content %}

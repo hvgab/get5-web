@@ -5,6 +5,19 @@
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
         },
-      },
-      "isort.args":["--profile", "black"],
+    },
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "[django-html]": {
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": true,
+            "strings": true
+        },
+    },
+    "djlint.formatJs": false,
+    "djlint.formatCss": false,
 }

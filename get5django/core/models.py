@@ -8,6 +8,12 @@ class GameServer(models.Model):
     description = models.TextField(max_length=255, null=True, blank=True)
 
     url = models.CharField(max_length=255)
+    internal_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="If you are hosting this app on the same local network as the game-server.",
+    )
     port = models.IntegerField()
 
     ssh_user = models.CharField(max_length=255, null=True, blank=True)
@@ -19,7 +25,17 @@ class GameServer(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @property
+    def rcon_url(self):
+        if self.internal_url is not None:
+            return self.internal_url
+        return self.url
+
     def get_info(self):
+        if self.internal_url is not None:
+            return A2sInfoService.execute(
+                {"address": f"{self.internal_url}:{self.port}"}
+            )
         return A2sInfoService.execute({"address": f"{self.url}:{self.port}"})
 
 
@@ -59,7 +75,7 @@ class Team(models.Model):
     # players = models.ManyToManyField(to=Player, related_name='teams', null=True, blank=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"[{self.tag}] {self.name}"
 
 
 class Match(models.Model):
@@ -89,6 +105,11 @@ class Match(models.Model):
         blank=True,
         help_text="La denne være blank så fikser Get5 Tittel selv.",
     )
+
+    match_date_time = models.DateTimeField(
+        null=True, blank=True, help_text="When is the match planned for?"
+    )
+
     clinch_series = models.BooleanField(
         default=True,
         help_text="Don't play third match in BO3 if one team has already won 2.",
@@ -140,8 +161,17 @@ de_eternity
 de_akihabara
 de_austria
 de_beerhouse
+
+*** Vintercup ***
+de_inferno
+de_overpass
+de_train
+de_vertigo
+de_cbble
+de_lake
+de_shortdust
 """,
-        help_text="new line separated map list. (de_dust2,de_inferno)",
+        help_text="7 Maps. One map per line.",
     )
 
     team1 = models.ForeignKey(

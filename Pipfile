@@ -18,8 +18,10 @@ dj-rest-auth = "*"
 social-auth-app-django = "*"
 djlint = "*"
 django-login-required-middleware = "*"
+tzdata = "*"
 
 [dev-packages]
+djlint = "*"
 
 [requires]
 python_version = "3.8"

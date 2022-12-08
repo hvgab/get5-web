@@ -19,11 +19,9 @@ class GameServerDetailView(DetailView):
 
         gameserver = context["gameserver"]
 
-        context["info"] = A2sInfoService.execute(
-            {"address": f"{gameserver.url}:{gameserver.port}"}
-        )
+        context["info"] = gameserver.get_info()
 
-        context["a2s"] = A2sService.execute({"game_server": gameserver})
+        context["a2s"] = A2sService.execute({"gameserver": gameserver})
 
         map_name = context["info"]["map_name"]
         if "/" in map_name:

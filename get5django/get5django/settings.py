@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "10.13.37.144"]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
@@ -122,6 +122,7 @@ SOCIAL_AUTH_STEAM_EXTRA_DATA = ["player"]
 LOGIN_REQUIRED_IGNORE_PATHS = [
     "/accounts/",
     "/auth/",
+    "/api/get5/*",
 ]
 LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [
     "admin:index",

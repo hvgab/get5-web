@@ -39,7 +39,8 @@ gameserver_urlpatterns = [
     ),
     path(
         "game-server/<int:pk>/",
-        GameServerDetailView.as_view(),
+        # GameServerDetailView.as_view(),
+        RedirectView.as_view(pattern_name="gameserver_database"),
         name="gameserver_detail",
     ),
     path(
