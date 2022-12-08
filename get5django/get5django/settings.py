@@ -24,9 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "10.13.37.144"]
+ALLOWED_HOSTS = [
+    "tournament.gabbeh.no",
+    "bots.gabbeh.no",
+    "10.13.37.14",
+    "localhost",
+    "10.13.37.144",
+]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
@@ -148,6 +154,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
