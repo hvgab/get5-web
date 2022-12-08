@@ -409,9 +409,12 @@
                             console.log(e);
                             console.log(e.target);
                             console.log(e.target.dataset.command);
-                            const command = e.target.dataset.command;
-                            if (command == 'status'){
-                                console.log('example for later');
+                            var command = e.target.dataset.command;
+                            if (command == 'get5_loadmatch_url'){
+                                console.log('Loading match url');
+                                console.log(command);
+                                command = `get5_loadmatch_url "http://bots.gabbeh.no:8000/api/get5/match_config/{{match.id}}"`;
+                                console.log(command);
                             }
                             sendRcon(command);
                         }
@@ -439,7 +442,7 @@
                             const rconFeed = document.getElementById('rconFeed');
                             const today = new Date();
                             rconFeed.insertAdjacentHTML('afterbegin', `<div class="message"><div class="message-header"><span class="message-command">${command}</span><span class="is-pulled-right message-time">${today.toISOString()}</span></div><div class="message-body"><pre style="background-color:transparent;">${data}</pre></div></div>`);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
                     </script>
                 </div>
                 <div class="column">

@@ -50,15 +50,33 @@
                                     </tr>
                                     <tr>
                                         <th>SSH User</th>
-                                        <td>{{ gameserver.ssh_user }}</td>
+                                        <td>
+                                            {% if user.is_staff %}
+                                                {{ gameserver.ssh_user }}
+                                            {% else %}
+                                                ****
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>SSH Password</th>
-                                        <td>****</td>
+                                        <td>
+                                            {% if user.is_staff %}
+                                                {{ gameserver.ssh_password }}
+                                            {% else %}
+                                                ****
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Rcon Password</th>
-                                        <td>{{ gameserver.rcon_password }}</td>
+                                        <td>
+                                            {% if user.is_staff %}
+                                                {{ gameserver.rcon_password }}
+                                            {% else %}
+                                                ****
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -81,17 +99,11 @@
                                         <td>{{ info.player_count }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            max_players
-                                        </th>
-                                        <td>
-                                            {{ info.max_players }}
-                                        </td>
+                                        <th>max_players</th>
+                                        <td>{{ info.max_players }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            port
-                                        </th>
+                                        <th>port</th>
                                         <td>
                                             {{ info.port }}
                                         </td>
