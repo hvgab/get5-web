@@ -130,7 +130,7 @@ def get5_match(request, match_id: int):
             "name": match.team2.name,
             "tag": match.team2.tag,
             "flag": "NO",
-            "logo": "gp",
+            # "logo": "gp",
             "players": [
                 match.team2.player1,
                 match.team2.player2,

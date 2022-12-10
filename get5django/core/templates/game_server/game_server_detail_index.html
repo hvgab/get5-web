@@ -48,36 +48,6 @@
                                         <th>Port</th>
                                         <td>{{ gameserver.port }}</td>
                                     </tr>
-                                    <tr>
-                                        <th>SSH User</th>
-                                        <td>
-                                            {% if user.is_staff %}
-                                                {{ gameserver.ssh_user }}
-                                            {% else %}
-                                                ****
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>SSH Password</th>
-                                        <td>
-                                            {% if user.is_staff %}
-                                                {{ gameserver.ssh_password }}
-                                            {% else %}
-                                                ****
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Rcon Password</th>
-                                        <td>
-                                            {% if user.is_staff %}
-                                                {{ gameserver.rcon_password }}
-                                            {% else %}
-                                                ****
-                                            {% endif %}
-                                        </td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -104,17 +74,11 @@
                                     </tr>
                                     <tr>
                                         <th>port</th>
-                                        <td>
-                                            {{ info.port }}
-                                        </td>
+                                        <td>{{ info.port }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            stv_port
-                                        </th>
-                                        <td>
-                                            {{ info.stv_port }}
-                                        </td>
+                                        <th>stv_port</th>
+                                        <td>{{ info.stv_port }}</td>
                                     </tr>
                                     <tr>
                                         <th>

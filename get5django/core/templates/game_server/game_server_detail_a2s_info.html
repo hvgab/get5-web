@@ -1,31 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <div class="is-pulled-right">
-                    <ul>
-                        <li>{{gameserver.url}}:{{gameserver.port}}</li>
-                        <li><code>{{gameserver.rcon_password}}</code></li>
-                    </ul>
-                </div>
-                <p class="title">
-                    {{ a2s.info.server_name }}
-                </p>
-                <p class="subtitle">
-                    {{ a2s.info.map_name}} {{ a2s.info.player_count}}/{{ a2s.info.max_players}}
-                </p>
-            </div>
-        </div>
-    </section>
+    {% include 'game_server/_game_server_detail_header.html' %}
     <section class="section">
         <div class="container">
             <div class="columns">
                 <div class="column">
                     <h1 class="title">GameServer Details</h1>
-                    <p class="subtitle">
-                        Database
-                    </p>
+                    <p class="subtitle">Database</p>
                     <table class="table">
                         <tr>
                             <th>Name</th>
@@ -49,15 +30,13 @@
                         </tr>
                         <tr>
                             <th>Rcon Password</th>
-                            <td>{{ gameserver.rcon_password }}</td>
+                            <td>****</td>
                         </tr>
                     </table>
                 </div>
                 <div class="column">
                     <h1 class="title">GameServer Details</h1>
-                    <p class="subtitle">
-                        Query
-                    </p>
+                    <p class="subtitle">Query</p>
                     <table class="table">
                         <tr>
                             <th>Server Name</th>
@@ -75,16 +54,10 @@
                             <th>max_players</th>
                             <td>{{ a2s.info.max_players }}</td>
                         </tr>
-                        
                         <tr>
-                            <th>
-                                port
-                            </th>
-                            <td>
-                                {{ a2s.info.port }}
-                            </td>
+                            <th>port</th>
+                            <td>{{ a2s.info.port }}</td>
                         </tr>
-                        
                         <tr>
                             <th>
                                 stv_port

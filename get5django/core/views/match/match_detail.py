@@ -4,6 +4,7 @@ import logging
 from core.models import Match
 from core.services.rcon_service import RconService
 from core.services.steam_get_player_summary_service import SteamGetPlayerSummaryService
+from django.conf import settings
 from django.views.generic import DetailView
 
 logger = logging.getLogger(__name__)
@@ -17,39 +18,40 @@ class MatchDetailView(DetailView):
         context = super().get_context_data(**kwargs)
 
         ### Get5 Web Available ###
-        get5_web_available_response = RconService.execute(
-            {
-                "gameserver": context["match"].game_server,
-                "command": "get5_web_available",
+        if context["match"].game_server is not None:
+            get5_web_available_response = RconService.execute(
+                {
+                    "gameserver": context["match"].game_server,
+                    "command": "get5_web_available",
+                }
+            )
+
+            logger.info("get5_web_available_response")
+            logger.info(get5_web_available_response)
+            rj, log = get5_web_available_response.split("L")
+
+            logger.debug("rj")
+            logger.debug(rj)
+
+            logger.debug("log")
+            logger.debug(log)
+
+            response = None
+            error = None
+            if rj.startswith("Unknown command"):
+                error = rj
+            else:
+                response = rj
+
+            if response is not None:
+                response = json.loads(response)
+
+            context["get5_web_available"] = {
+                "full": get5_web_available_response,
+                "response": response,
+                "log": log,
+                "error": error,
             }
-        )
-
-        logger.info("get5_web_available_response")
-        logger.info(get5_web_available_response)
-        rj, log = get5_web_available_response.split("L")
-
-        logger.debug("rj")
-        logger.debug(rj)
-
-        logger.debug("log")
-        logger.debug(log)
-
-        response = None
-        error = None
-        if rj.startswith("Unknown command"):
-            error = rj
-        else:
-            response = rj
-
-        if response is not None:
-            response = json.loads(response)
-
-        context["get5_web_available"] = {
-            "full": get5_web_available_response,
-            "response": response,
-            "log": log,
-            "error": error,
-        }
 
         ### Match Teams With Steam Data ###
         team_list = [context["match"].team1, context["match"].team2]
@@ -97,5 +99,7 @@ class MatchDetailView(DetailView):
                 team.player5 = {"personaname": team.player5}
 
         context["match"].team1, context["match"].team2 = team_list
+
+        context["GET5_API_HOST"] = settings.GET5_API_HOST
 
         return context

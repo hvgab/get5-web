@@ -1,4 +1,5 @@
 import logging
+import socket
 
 from core.models import GameServer
 from django import forms
@@ -16,12 +17,18 @@ class RconService(Service):
         gameserver = self.cleaned_data["gameserver"]
         command = self.cleaned_data["command"]
 
-        with RconClient(
-            gameserver.rcon_url, gameserver.port, passwd=gameserver.rcon_password
-        ) as client:
-            if isinstance(command, list):
-                response = client.run(*command)
-            else:
-                response = client.run(command)
-            logger.debug(response)
-            return response
+        try:
+            with RconClient(
+                gameserver.rcon_url,
+                gameserver.port,
+                passwd=gameserver.rcon_password,
+                timeout=1.5,
+            ) as client:
+                if isinstance(command, list):
+                    response = client.run(*command)
+                else:
+                    response = client.run(command)
+                logger.debug(response)
+                return response
+        except socket.timeout as timeout:
+            logger.error(timeout)

@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "tournament.gabbeh.no",
@@ -33,6 +33,9 @@ ALLOWED_HOSTS = [
     "localhost",
     "10.13.37.144",
 ]
+
+# The base url to send to the server, the csgo-server then does curl to this address.
+GET5_API_HOST = os.getenv("GET5_API_HOST")
 
 INTERNAL_IPS = ["127.0.0.1"]
 

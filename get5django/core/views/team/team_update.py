@@ -19,7 +19,10 @@ class TeamUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
 
         steam_auth = self.request.user.social_auth.filter(provider="steam").first()
-        steam_friends = SteamGetFriendsService.execute({"steam_id": steam_auth.uid})
+        try:
+            steam_friends = SteamGetFriendsService.execute({"steam_id": steam_auth.uid})
+        except:
+            steam_friends = []
         context["steam_friends"] = steam_friends
 
         return context

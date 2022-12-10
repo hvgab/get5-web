@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class GameServerDetailA2sInfoView(DetailView):
     model = GameServer
-    template_name = "game_server/game_server_detail.html"
+    template_name = "game_server/game_server_detail_a2s_info.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
