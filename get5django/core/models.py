@@ -1,8 +1,19 @@
+from django.conf import settings
 from django.db import models
 
 
 # Create your models here.
 class GameServer(models.Model):
+
+    owner = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="owned_gameservers",
+    )
+    admins = models.ManyToManyField(
+        to=settings.AUTH_USER_MODEL, related_name="admined_gameservers"
+    )
+
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=255, null=True, blank=True)
 
@@ -14,6 +25,11 @@ class GameServer(models.Model):
         help_text="If you are hosting this app on the same local network as the game-server.",
     )
     port = models.IntegerField()
+
+    public = models.BooleanField(
+        verbose_name="Is the server public?",
+        name="Is Public",
+    )
 
     ssh_user = models.CharField(max_length=255, null=True, blank=True)
     ssh_password = models.CharField(max_length=255, null=True, blank=True)
@@ -235,3 +251,16 @@ de_shortdust
         return (
             self.start_time is not None and self.end_time is None and not self.cancelled
         )
+
+
+class Organization(models.Model):
+    name = models.CharField(max_length=64)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+
+class Cup(models.Model):
+    name = models.CharField(max_length=64)
+    organization = models.ForeignKey("organization")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
