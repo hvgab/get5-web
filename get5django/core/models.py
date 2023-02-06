@@ -1,5 +1,6 @@
-from core.services.a2s_info_service import A2sInfoService
 from django.db import models
+
+from core.services.a2s_info_service import A2sInfoService
 
 
 # Create your models here.
@@ -8,6 +9,11 @@ class GameServer(models.Model):
     description = models.TextField(max_length=255, null=True, blank=True)
 
     url = models.CharField(max_length=255)
+    internal_url = models.CharField(
+        max_length=255,
+        unique=False,
+        help_text="If you host this web app on the same network as your servers, use internal address.",
+    )
     port = models.IntegerField()
 
     ssh_user = models.CharField(max_length=255, null=True, blank=True)
