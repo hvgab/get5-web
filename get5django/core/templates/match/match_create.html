@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <section class="section">
+    <section class="section section has-background-white">
         <div class="container">
             <h2 class="title">Add Match</h2>
             <form class="" method="post">
@@ -11,6 +11,11 @@
                 <input type="submit" value="Submit" />
             </form>
         </div>
-    </div>
-</section>
+    </section>
+    <script>
+        const team1 = document.querySelector('#id_team1');
+        const team2 = document.querySelector('#id_team2');
+        const choices_team1 = new Choices(team1);
+        const choices_team2 = new Choices(team2);
+    </script>
 {% endblock content %}

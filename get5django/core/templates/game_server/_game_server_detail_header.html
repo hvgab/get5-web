@@ -1,0 +1,21 @@
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <div class="is-pulled-right">
+                <ul>
+                    <li>{{ gameserver.url }}:{{ gameserver.port }}</li>
+                </ul>
+            </div>
+            <h1 class="title">{{ gameserver.name }}</h1>
+            {% if a2s or info %}
+                {% if a2s %}
+                    <h2 class="subtitle">{{ a2s.info.server_name }}</h2>
+                    <p>{{ a2s.info.map_name }} {{ a2s.info.player_count }}/{{ a2s.info.max_players }}</p>
+                {% elif info %}
+                    <h2 class="subtitle">{{ info.server_name }}</h2>
+                    <p>{{ info.map_name }} {{ info.player_count }}/{{ info.max_players }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</section>

@@ -1,10 +1,20 @@
-from django.db import models
-
 from core.services.a2s_info_service import A2sInfoService
+from django.conf import settings
+from django.db import models
 
 
 # Create your models here.
 class GameServer(models.Model):
+
+    owner = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="owned_gameservers",
+    )
+    admins = models.ManyToManyField(
+        to=settings.AUTH_USER_MODEL, related_name="admined_gameservers"
+    )
+
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=255, null=True, blank=True)
 
@@ -12,9 +22,16 @@ class GameServer(models.Model):
     internal_url = models.CharField(
         max_length=255,
         unique=False,
-        help_text="If you host this web app on the same network as your servers, use internal address.",
+        null=True,
+        blank=True,
+        help_text="If you are hosting this app on the same local network as the game-server.",
     )
     port = models.IntegerField()
+
+    public = models.BooleanField(
+        verbose_name="Is the server public?",
+        name="Is Public",
+    )
 
     ssh_user = models.CharField(max_length=255, null=True, blank=True)
     ssh_password = models.CharField(max_length=255, null=True, blank=True)
@@ -25,8 +42,26 @@ class GameServer(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @property
+    def rcon_url(self):
+        if self.internal_url is not None:
+            return self.internal_url
+        return self.url
+
     def get_info(self):
-        return A2sInfoService.execute({"address": f"{self.url}:{self.port}"})
+        from core.services.a2s_info_service import A2sInfoService
+
+        return A2sInfoService.execute({"gameserver": self})
+
+    def get_players(self):
+        from core.services.a2s_player_service import A2sPlayerService
+
+        return A2sPlayerService.execute({"gameserver": self})
+
+    def get_rules(self):
+        from core.services.a2s_rules_service import A2sRulesService
+
+        return A2sRulesService.execute({"gameserver": self})
 
 
 class Player(models.Model):
@@ -65,7 +100,7 @@ class Team(models.Model):
     # players = models.ManyToManyField(to=Player, related_name='teams', null=True, blank=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"[{self.tag}] {self.name}"
 
 
 class Match(models.Model):
@@ -95,6 +130,11 @@ class Match(models.Model):
         blank=True,
         help_text="La denne være blank så fikser Get5 Tittel selv.",
     )
+
+    match_date_time = models.DateTimeField(
+        null=True, blank=True, help_text="When is the match planned for?"
+    )
+
     clinch_series = models.BooleanField(
         default=True,
         help_text="Don't play third match in BO3 if one team has already won 2.",
@@ -146,8 +186,17 @@ de_eternity
 de_akihabara
 de_austria
 de_beerhouse
+
+*** Vintercup ***
+de_inferno
+de_overpass
+de_train
+de_vertigo
+de_cbble
+de_lake
+de_shortdust
 """,
-        help_text="new line separated map list. (de_dust2,de_inferno)",
+        help_text="7 Maps. One map per line.",
     )
 
     team1 = models.ForeignKey(
@@ -204,3 +253,16 @@ de_beerhouse
         return (
             self.start_time is not None and self.end_time is None and not self.cancelled
         )
+
+
+class Organization(models.Model):
+    name = models.CharField(max_length=64)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+
+class Cup(models.Model):
+    name = models.CharField(max_length=64)
+    organization = models.ForeignKey("organization")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    admins = models.ManyToManyField(settings.AUTH_USER_MODEL)

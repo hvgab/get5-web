@@ -1,109 +1,133 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-background-light">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>
+            {% block title %}
+                Lance Legends
+            {% endblock title %}
+            (LL)
+        </title>
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js" integrity="sha512-hcV6DX35BKgiTiWYrJgPbu3FxS6CsCjKgmrsPRpUPkXWbvPiKxvSVSdhWX0yXcPctOI2FJ4WP6N1zH+17B/sAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- choices -->
+        <!--<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css"/>-->
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     </head>
     <body>
-        <nav class="navbar container"
-             role="navigation"
-             aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="{% url 'gameserver_index' %}">
-                    <img src="https://bc-gb.com/wp-content/uploads/2016/10/csgo-logo-wallpapers-10.jpg"
-                         width="50"
-                         height="28">
-                </a>
-                <a role="button"
-                   class="navbar-burger"
-                   aria-label="menu"
-                   aria-expanded="false"
-                   data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <!-- Game Servers -->
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="{% url 'gameserver_index' %}" class="navbar-link">Game Servers</a>
-                        <div class="navbar-dropdown">
-                            <a href="{% url 'gameserver_list' %}" class="navbar-item">List</a>
-                            <a href="{% url 'gameserver_create' %}" class="navbar-item">New</a>
-                        </div>
-                    </div>
-                    <!-- Teams -->
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="{% url 'team_index' %}" class="navbar-link">Teams</a>
-                        <div class="navbar-dropdown">
-                            <a href="{% url 'team_list' %}" class="navbar-item">List</a>
-                            <a href="{% url 'team_create' %}" class="navbar-item">New</a>
-                        </div>
-                    </div>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="{% url 'match_index' %}" class="navbar-link">Matches</a>
-                        <div class="navbar-dropdown">
-                            <a href="{% url 'match_list' %}" class="navbar-item">List</a>
-                            <a href="{% url 'match_create' %}" class="navbar-item">New</a>
-                        </div>
-                    </div>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="{% url 'player_index' %}" class="navbar-link">Players</a>
-                        <div class="navbar-dropdown">
-                            <a href="{% url 'player_list' %}" class="navbar-item">List</a>
-                            <a href="{% url 'player_create' %}" class="navbar-item">New</a>
-                        </div>
-                    </div>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">More</a>
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">Github</a>
-                            <a class="navbar-item">Discord</a>
-                            <a class="navbar-item">Contact</a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">Report an issue</a>
-                        </div>
-                    </div>
+        <div class="has-background-white">
+            <nav class="navbar container has-background-white"
+                 role="navigation"
+                 aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url 'gameserver_index' %}">
+                        {% comment %}
+                        <img src="https://bc-gb.com/wp-content/uploads/2016/10/csgo-logo-wallpapers-10.jpg" width="50" height="28">
+                        {% endcomment %}
+                        <img src="{% static 'logo.png' %}" alt="logo">
+                    </a>
+                    <a role="button"
+                       class="navbar-burger"
+                       aria-label="menu"
+                       aria-expanded="false"
+                       data-target="navbarBasicExample">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
                 </div>
-                <div class="navbar-end">
-                    {% if user.is_authenticated %}
+                <div id="navbarBasicExample" class="navbar-menu">
+                    <div class="navbar-start">
+                        <!-- Game Servers -->
                         <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                {{ user }}
-                                &nbsp;
-                                <img src="{{ backends.associated.first.extra_data.player.avatar }}" alt="avatar">
-                            </a>
+                            <a href="{% url 'gameserver_index' %}" class="navbar-link">Game Servers</a>
                             <div class="navbar-dropdown">
-                                <span class="navbar-item">{{ backends.associated.first.extra_data.player.steamid }}</span>
-                                <a href="{{backends.associated.first.extra_data.player.profileurl}}" class="navbar-item">Go to steam profile</a>
+                                <a href="{% url 'gameserver_list' %}" class="navbar-item">List</a>
+                                <a href="{% url 'gameserver_create' %}" class="navbar-item">New</a>
+                            </div>
+                        </div>
+                        <!-- Teams -->
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="{% url 'team_index' %}" class="navbar-link">Teams</a>
+                            <div class="navbar-dropdown">
+                                <a href="{% url 'team_list' %}" class="navbar-item">List</a>
+                                <a href="{% url 'team_create' %}" class="navbar-item">New</a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="{% url 'match_index' %}" class="navbar-link">Matches</a>
+                            <div class="navbar-dropdown">
+                                <a href="{% url 'match_list' %}" class="navbar-item">List</a>
+                                <a href="{% url 'match_create' %}" class="navbar-item">New</a>
+                            </div>
+                        </div>
+                        {% comment %}
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="{% url 'player_index' %}" class="navbar-link">Players</a>
+                            <div class="navbar-dropdown">
+                                <a href="{% url 'player_list' %}" class="navbar-item">List</a>
+                                <a href="{% url 'player_create' %}" class="navbar-item">New</a>
+                            </div>
+                        </div>
+                        {% endcomment %}
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">More</a>
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item"
+                                   href="https://github.com/hvgab/csgo-tournament-manager">Github</a>
+                                <a class="navbar-item" href="discordapp.com/users/152026317016137728">Gabbeh#0547</a>
                                 <hr class="navbar-divider">
-                                <a href="{% url 'logout' %}" class="navbar-item">Log Out</a>
+                                <a class="navbar-item"
+                                   href="https://github.com/hvgab/csgo-tournament-manager/issues">Report an issue</a>
                             </div>
                         </div>
-                    {% else %}
-                        <div class="navbar-item">
-                            <div class="buttons">
-                                <a href="{% url "social:begin" "steam" %}" class="button is-primary">
-                                    <strong>Log in with Steam</strong>
+                    </div>
+                    <div class="navbar-end">
+                        {% if user.is_authenticated %}
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    {{ user }}
+                                    &nbsp;
+                                    <img src="{{ backends.associated.first.extra_data.player.avatar }}"
+                                         alt="avatar">
                                 </a>
-                                <a href="{% url "social:begin" "steam" %}">
-                                    <img src="https://community.cloudflare.steamstatic.com/public/images/signinthroughsteam/sits_01.png"
-                                         alt="login with steam">
-                                </a>
+                                <div class="navbar-dropdown">
+                                    <span class="navbar-item">{{ backends.associated.first.extra_data.player.steamid }}</span>
+                                    <a href="{{ backends.associated.first.extra_data.player.profileurl }}"
+                                       class="navbar-item">Go to steam profile</a>
+                                    <hr class="navbar-divider">
+                                    {% if user.is_staff %}
+                                        <a href="{% url 'admin:index' %}" class="navbar-item">Admin</a>
+                                    {% endif %}
+                                    <a href="{% url 'logout' %}" class="navbar-item">Log Out</a>
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
+                        {% else %}
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a href="{% url "social:begin" "steam" %}" class="button is-primary">
+                                        <strong>Log in with Steam</strong>
+                                    </a>
+                                    <a href="{% url "social:begin" "steam" %}">
+                                        <img src="https://community.cloudflare.steamstatic.com/public/images/signinthroughsteam/sits_01.png"
+                                             alt="login with steam">
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
         {% block content %}
         {% endblock content %}
     </body>

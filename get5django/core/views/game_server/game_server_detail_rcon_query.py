@@ -36,11 +36,10 @@ class GameServerDetailRconQueryView(FormView, SingleObjectMixin):
         if "rcon_response" in kwargs:
             context["rcon_response"] = kwargs.get("rcon_response")
 
-        info = A2sInfoService.execute(
-            {"address": f"{gameserver.url}:{gameserver.port}"}
-        )
+        info = gameserver.get_info()
+
         context["info"] = info
-        context["a2s"] = A2sService.execute({"game_server": gameserver})
+        context["a2s"] = A2sService.execute({"gameserver": gameserver})
         map_name = info["map_name"]
         if "/" in map_name:
             map_name = map_name.split("/")[1]
@@ -53,9 +52,9 @@ class GameServerDetailRconQueryView(FormView, SingleObjectMixin):
         logger.debug("End: Get Context Data")
         return context
 
-    def form_valid(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
 
-        form = self.form_class(self.request.POST)
+        # form = self.form_class(self.request.POST)
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
         cd = form.cleaned_data

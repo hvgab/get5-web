@@ -8,6 +8,7 @@ from .game_server import (
     GameServerListView,
     GameServerUpdateView,
 )
+from .index import IndexView
 from .match import (
     MatchCreateView,
     MatchDeleteView,

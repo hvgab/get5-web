@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include 'game_server/_game_server_detail_header.html' %}
+    <section class="section">
+        <div class="">
+            <div class="columns">
+                <!-- Menu -->
+                <div class="column is-2">{% include "game_server/_game_server_menu.html" %}</div>
+                <!-- Content -->
+                <div class="column is-8">
+                    <div class="columns is-multiline">
+                        <div class="column">
+                            <div class="box">
+                                Game Modes
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <button class="button">
+                                            <span>Competitive</span>
+                                        </button>
+                                    </p>
+                                    <p class="control">
+                                        <button class="button">
+                                            <span>Competitive Short</span>
+                                        </button>
+                                    </p>
+                                    <p class="control">
+                                        <button class="button">
+                                            <span>Competitive 2v2</span>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <h1 class="title">GameServer Details</h1>
+                                <p class="subtitle">Database</p>
+                                <table class="table">
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>{{ gameserver.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Url</th>
+                                        <td>{{ gameserver.url }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Port</th>
+                                        <td>{{ gameserver.port }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <h1 class="title">GameServer Details</h1>
+                                <p class="subtitle">(A2S Info)</p>
+                                <table class="table">
+                                    <tr>
+                                        <th>Server Name</th>
+                                        <td>{{ info.server_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Map Name</th>
+                                        <td>{{ info.map_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>player_count</th>
+                                        <td>{{ info.player_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>max_players</th>
+                                        <td>{{ info.max_players }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>port</th>
+                                        <td>{{ info.port }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>stv_port</th>
+                                        <td>{{ info.stv_port }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            stv_name
+                                        </th>
+                                        <td>
+                                            {{ info.stv_name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            ping
+                                        </th>
+                                        <td>
+                                            {{ info.ping }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <h2 class="title">
+                                    Info
+                                </h2>
+                                <p class="subtitle">
+                                    (A2S Info)
+                                </p>
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            Server Name
+                                        </th>
+                                        <td>
+                                            {{ info.server_name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Map Name
+                                        </th>
+                                        <td>
+                                            {{ info.map_name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            game
+                                        </th>
+                                        <td>
+                                            {{ info.game }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            app_id
+                                        </th>
+                                        <td>
+                                            {{ info.app_id }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            player_count
+                                        </th>
+                                        <td>
+                                            {{ info.player_count }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            max_players
+                                        </th>
+                                        <td>
+                                            {{ info.max_players }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            bot_count
+                                        </th>
+                                        <td>
+                                            {{ info.bot_count }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            server_type
+                                        </th>
+                                        <td>
+                                            {% if info.server_type == 'd' %}
+                                                Dedicated
+                                            {% else %}
+                                                {{ info.server_type }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            platform
+                                        </th>
+                                        <td>
+                                            {% if info.platform == 'l' %}
+                                                Linux
+                                            {% else %}
+                                                {{ info.platform }}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            password_protected
+                                        </th>
+                                        <td>
+                                            {{ info.password_protected }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            vac_enabled
+                                        </th>
+                                        <td>
+                                            {{ info.vac_enabled }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            version
+                                        </th>
+                                        <td>
+                                            {{ info.version }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            port
+                                        </th>
+                                        <td>
+                                            {{ info.port }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            steam_id
+                                        </th>
+                                        <td>
+                                            {{ info.steam_id }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            stv_port
+                                        </th>
+                                        <td>
+                                            {{ info.stv_port }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            stv_name
+                                        </th>
+                                        <td>
+                                            {{ info.stv_name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            keywords
+                                        </th>
+                                        <td>
+                                            {{ info.keywords }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            game_id
+                                        </th>
+                                        <td>
+                                            {{ info.game_id }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            ping
+                                        </th>
+                                        <td>
+                                            {{ info.ping }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <h2 class="title">
+                                    Info
+                                </h2>
+                                <p class="subtitle">
+                                    (A2S Info)
+                                </p>
+                                <pre>{{info|pprint}}</pre>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <h2 class="title">
+                                    Players
+                                </h2>
+                                <p class="subtitle">
+                                    (A2S Players)
+                                </p>
+                                <pre>{{ players|pprint }}</pre>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <h2 class="title">
+                                    Rules
+                                </h2>
+                                <p class="subtitle">
+                                    (A2S Rules)
+                                </p>
+                                <pre>{{ rules|pprint }}</pre>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Side -->
+                <div class="column is-narrow">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

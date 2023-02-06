@@ -1,18 +1,20 @@
-
-{% extends 'base.html' %}
-
+{% extends 'game_server/_game_server_detail_base.html' %}
 {% block content %}
-<section class="section">
-    <div class="container">
-
-        <h2 class="title">Update GameServer</h2>
-        <form method="post">
-            <table class="table">
-                {% csrf_token %}
-                {{ form.as_table }}
-            </table>
-            <input type="submit" value="Submit" />
-        </form>
+    {{ block.super }}
+    <div class="column">
+        <section class="section">
+            <div class="container">
+                <div class="box">
+                    <h2 class="title">Update GameServer</h2>
+                    <form method="post">
+                        <table class="table">
+                            {% csrf_token %}
+                            {{ form.as_table }}
+                        </table>
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
+            </div>
+        </section>
     </div>
-    </section>
 {% endblock content %}

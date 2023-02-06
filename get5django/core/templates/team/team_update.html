@@ -1,15 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
-    <section class="section">
+    <section class="section section has-background-white">
         <div class="container">
-            <h2 class="form-title">Update Team</h2>
-            <form method="post">
-                <table class="table">
-                    {% csrf_token %}
-                    {{ form.as_table }}
-                </table>
-                <input class="button" type="submit" value="Submit" />
-            </form>
+            <h2 class="title">Update Team</h2>
+            <div class="columns">
+                <div class="column">
+                    <h3 class="title">Form</h3>
+                    <form class="" method="post">
+                        <table class="table">
+                            {% csrf_token %}
+                            {{ form.as_table }}
+                        </table>
+                        <input class="button is-primary" type="submit" value="Submit" />
+                    </form>
+                </div>
+                <div class="column">
+                    <h3 class="title">Your Steam Friends</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Index</th>
+                            <th>Avatar</th>
+                            <th>Persona Name</th>
+                            <th>Real Name</th>
+                            <th>SteamID</th>
+                            <th>Profile Url</th>
+                        </tr>
+                        {% for friend in steam_friends %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <img src="{{ friend.avatar }}" alt="friend avatar">
+                                </td>
+                                <td>{{ friend.personaname }}</td>
+                                <td>{{ friend.realname }}</td>
+                                <td>{{ friend.steamid }}</td>
+                                <td>
+                                    <a href="{{ friend.profileurl }}">Steam Profile</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    {% for friend in steam_friends %}
+                        <pre>
+                        <code>{{ friend | pprint }}</code>
+                    </pre>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </section>
 {% endblock content %}

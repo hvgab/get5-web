@@ -14,10 +14,10 @@
                 <div class="column">
                     <div class="columns is-multiline">
                         {% for team in team_list %}
-                            <div class="column">
+                            <div class="column is-12-tablet is-6-desktop is-4-widescreen">
                                 <div class="card">
                                     <header class="card-header">
-                                        <p class="card-header-title">{{ team.name }}</p>
+                                        <p class="card-header-title">[{{ team.tag }}] {{ team.name }}</p>
                                     </header>
                                     {% comment %}
                                     <div class="card-image">
@@ -29,39 +29,64 @@
                                     </div> 
                                     {% endcomment %}
                                     <div class="card-content">
-                                        <div class="columns">
-                                            <div class="column">
-                                                <ul>
-                                                    <li>
-                                                        <div>
-                                                            {% if team.player1.avatar %}
-                                                                <figure class="image is-16x16">
-                                                                    <img src="{{ team.player1.avatar }}" alt="avatar"/>
-                                                                </figure>
-                                                            {% endif %}
-                                                            {{ team.player1.personaname | default:'' }}
-                                                        </div>
-                                                    </li>
-                                                    <li>{{ team.player2.personaname | default:'' }}</li>
-                                                    <li>{{ team.player3.personaname | default:'' }}</li>
-                                                    <li>{{ team.player4.personaname | default:'' }}</li>
-                                                    <li>{{ team.player5.personaname | default:'' }}</li>
-                                                    <li>{{ team.player6.personaname | default:'' }}</li>
-                                                    <li>{{ team.player7.personaname | default:'' }}</li>
-                                                </ul>
+                                        <div class="media my-0 py-0">
+                                            <figure class="media-left">
+                                                <p class="image is-32x32">
+                                                    {% if team.player1.avatar %}
+                                                        <img src="{{ team.player1.avatar }}" alt="avatar"/>
+                                                    {% else %}
+                                                        <i class="mdi mdi-account mdi-36px" style="line-height: 1;"></i>
+                                                    {% endif %}
+                                                </p>
+                                            </figure>
+                                            <div class="media-content">
+                                                <div class="content">
+                                                    {% if team.player1 %}
+                                                        <p>
+                                                            {{ team.player1.personaname }}
+                                                            <a href="{{ team.player1.profileurl }}">
+                                                                <span class="icon is-small"><i class="mdi mdi-steam"></i></span>
+                                                            </a>
+                                                        </p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media my-0 py-0">
+                                            <figure class="media-left">
+                                                <p class="image is-32x32">
+                                                    {% if team.player2.avatar %}
+                                                        <img src="{{ team.player2.avatar }}" alt="avatar"/>
+                                                    {% else %}
+                                                        <i class="mdi mdi-account mdi-36px" style="line-height: 1;"></i>
+                                                    {% endif %}
+                                                </p>
+                                            </figure>
+                                            <div class="media-content">
+                                                <div class="content">
+                                                    {% if team.player2 %}
+                                                        <p>
+                                                            {{ team.player2.personaname }}
+                                                            <a href="{{ team.player2.profileurl }}">
+                                                                <span class="icon is-small"><i class="mdi mdi-steam"></i></span>
+                                                            </a>
+                                                        </p>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <footer class="card-footer">
-                                        <a href="{% url 'team_detail' pk=team.pk %}" class="card-footer-item">View Details</a>
+                                        <a href="{% url 'team_detail' pk=team.pk %}" class="card-footer-item">View</a>
+                                        <a href="{% url 'team_update' pk=team.pk %}" class="card-footer-item">Edit</a>
                                     </footer>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="column is-3">
-                    <table class="table table-fluid">
+                <div class="column is-6-tablet is-6-desktop is-4-widescreen is-3-fullhd">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Team</th>
@@ -73,7 +98,7 @@
                         <tbody>
                             {% for team in object_list %}
                                 <tr>
-                                    <td>{{ team }}</td>
+                                    <td>[{{ team.tag }}] {{ team.name }}</td>
                                     <td>
                                         <a href="{% url "team_detail" team.id %}">view</a>
                                     </td>
@@ -87,6 +112,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    <a class="button is-fullwidth" href="{% url "team_create" %}">New</a>
                 </div>
             </div>
             <a href="{% url "team_create" %}">New</a>

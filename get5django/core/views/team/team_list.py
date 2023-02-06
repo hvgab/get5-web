@@ -23,9 +23,10 @@ class TeamListView(ListView):
             if team.player5 is not None:
                 all_players.append(team.player5)
 
-        all_players_with_summary = SteamGetPlayerSummaryService.execute(
-            {"steam_ids": all_players}
-        )
+        if all_players:
+            all_players_with_summary = SteamGetPlayerSummaryService.execute(
+                {"steam_ids": all_players}
+            )
 
         for team in context["team_list"]:
             for player_summary in all_players_with_summary:

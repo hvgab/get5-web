@@ -2,6 +2,8 @@ import logging
 
 from core.models import GameServer
 from core.services.a2s_info_service import A2sInfoService
+from core.services.a2s_player_service import A2sPlayerService
+from core.services.a2s_rules_service import A2sRulesService
 from core.services.a2s_service import A2sService
 from core.services.og_image_service import OgImageService
 from django.views.generic import DetailView
@@ -9,17 +11,20 @@ from django.views.generic import DetailView
 logger = logging.getLogger(__name__)
 
 
-class GameServerDetailA2sInfoView(DetailView):
+class GameServerDetailIndexView(DetailView):
     model = GameServer
-    template_name = "game_server/game_server_detail_a2s_info.html"
+    template_name = "game_server/game_server_detail_index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         gameserver = context["gameserver"]
 
-        context["info"] = gameserver.get_info()
+        # context["info"] = gameserver.get_info()
 
-        context["a2s"] = A2sService.execute({"gameserver": gameserver})
+        # context["a2s"] = A2sService.execute({"gameserver": gameserver})
+        context["info"] = A2sInfoService.execute({"gameserver": gameserver})
+        context["players"] = A2sPlayerService.execute({"gameserver": gameserver})
+        context["rules"] = A2sRulesService.execute({"gameserver": gameserver})
 
         map_name = context["info"]["map_name"]
         if "/" in map_name:

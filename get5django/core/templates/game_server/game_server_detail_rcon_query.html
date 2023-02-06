@@ -6,23 +6,156 @@
             <h2 class="title">RCON Query</h2>
             <div class="columns">
                 <div class="column">
-                    <div class="section">
-                        <form method="post">
-                            <table class="table">
-                                {% csrf_token %}
-                                {{ form.as_table }}
-                            </table>
-                            <input class="button" type="submit" value="Submit" />
-                        </form>
+                    <h3 class="title">Issue RCON Commands</h3>
+                    <div id="rcon-buttons">
+                        <div class="buttons">
+                            <button id="rcon-status-button"
+                                    data-command="mp_warmup_end"
+                                    class="rcon-button button is-fullwidth is-info">
+                                mp_warmup_end
+                            </button>
+                            <button id="rcon-status-button"
+                                    data-command="maps"
+                                    class="rcon-button button is-fullwidth is-info">maps</button>
+                            <button id="rcon-status-button"
+                                    data-command="status"
+                                    class="rcon-button button is-fullwidth is-info">Status</button>
+                            <button id="rcon-get5-status-button"
+                                    data-command="get5_status"
+                                    class="rcon-button button is-fullwidth is-info">
+                                Get5 Status
+                            </button>
+                        </div>
+                        <div class="buttons has-addons">
+                            <button id="rcon-sm-pause"
+                                    data-command="sm_pause"
+                                    class="rcon-button button is-warning"
+                                    style="flex:auto">
+                                GET5/SM ADMIN PAUSE
+                            </button>
+                            <button id="rcon-sm-unpause"
+                                    data-command="sm_unpause"
+                                    class="rcon-button button is-success"
+                                    style="flex:auto">
+                                GET5/SM ADMIN *UN*PAUSE
+                            </button>
+                        </div>
+                        <div class="buttons">
+                            <button id="rcon-get5-list-backups"
+                                    data-command="get5_listbackups"
+                                    class="rcon-button button is-fullwidth">
+                                Get5 List backups
+                            </button>
+                        </div>
                     </div>
-                    <div class="section">
-                        <div class="box">
-                            <pre><code>{{ rcon_response }}</code></pre>
+                    <hr>
+                    <div id="rcon-form">
+                        <div class="field">
+                            <label class="label">Manual RCON</label>
+                            <div class="control">
+                                <input id="manualRconInput"
+                                       class="input"
+                                       type="text"
+                                       placeholder="Text input">
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button id="manualRcon" class="button is-link">Submit</button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-light">Cancel</button>
+                            </div>
+                        </div>
+                        <div>
+                            <script>
+                                        {# Add event listeners for premade buttons #}
+                                        const buttons = document.getElementsByClassName("rcon-button");
+                                        for (i=0; i<buttons.length; i++){
+                                            buttons[i].addEventListener('click', buttonToRcon)
+                                        }
+                
+                                        {# Manual Rcon with input #}
+                                        document.getElementById("manualRcon").addEventListener("click", inputToSendRcon);
+                
+                                        function buttonToRcon(e) {
+                                            console.log(e);
+                                            console.log(e.target);
+                                            console.log(e.target.dataset.command);
+                                            var command = e.target.dataset.command;
+                                            if (command == 'get5_loadmatch_url'){
+                                                console.log('Loading match url');
+                                                console.log(command);
+                                                command = `get5_loadmatch_url "http://bots.gabbeh.no:8000/api/get5/match_config/{{match.id}}"`;
+                                                console.log(command);
+                                            }
+                                            sendRcon(command);
+                                        }
+                
+                                        function inputToSendRcon(e) {
+                                            const manualRconInput = document.getElementById('manualRconInput');
+                                            sendRcon(manualRconInput.value);
+                                        }
+                
+                                        function sendRcon(command) {
+                                            fetch("/api/gameserver/{{gameserver.id}}/rcon", {
+                                                    method: 'POST',
+                                                    body: JSON.stringify({
+                                                        command: command
+                                                    })
+                                                })
+                                                .then(response => response.json())
+                                                .then(function(data) {
+                                                    console.log(data)
+                                                    addToFeed(command, data)
+                                                });
+                                        }
+                
+                                        function addToFeed(command, data) {
+                                            const rconFeed = document.getElementById('rconFeed');
+                                            const today = new Date();
+                                            rconFeed.insertAdjacentHTML('afterbegin', `<div class="message"><div class="message-header"><span class="message-command">${command}</span><span class="is-pulled-right message-time">${today.toISOString()}</span></div><div class="message-body"><pre class="p-0" style="background-color:transparent;">${data}</pre></div></div>`);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                            </script>
                         </div>
                     </div>
                 </div>
-                <div class="column">{% include 'game_server/_game_server_card.html' %}</div>
+                <div class="column">
+                    <h3 class="title">RCON Responses</h3>
+                    <div id="rconFeed"></div>
+                </div>
             </div>
         </div>
     </section>
+    <div class="column">{% include 'game_server/_game_server_card.html' %}</div>
+</div>
+</div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="section">
+            <form method="post">
+                <table class="table">
+                    {% csrf_token %}
+                    {{ form.as_table }}
+                </table>
+                <input class="button" type="submit" value="Submit" />
+            </form>
+        </div>
+        <div class="section">
+            <div class="box">
+                <pre><code>{{ rcon_response }}</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container"></div>
+</section>
+<section class="section">
+    <div class="container"></div>
+</section>
+<section class="section">
+    <div class="container"></div>
+</section>
 {% endblock content %}

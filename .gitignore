@@ -1,2 +1,4 @@
 .env
 get5django/db.sqlite3
+install-pyenv-win.ps1
+TODO.md

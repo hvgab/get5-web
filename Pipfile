@@ -16,6 +16,9 @@ nslookup = "*"
 django-debug-toolbar = "*"
 dj-rest-auth = "*"
 social-auth-app-django = "*"
+djlint = "*"
+django-login-required-middleware = "*"
+tzdata = "*"
 
 [dev-packages]
 djlint = "*"

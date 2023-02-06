@@ -1,6 +1,8 @@
 from core.views import (
     GameServerCreateView,
     GameServerDeleteView,
+    GameServerDetailA2sInfoView,
+    GameServerDetailDatabaseView,
     GameServerDetailRconQueryView,
     GameServerDetailView,
     GameServerListView,
@@ -21,6 +23,8 @@ from core.views import (
     TeamListView,
     TeamUpdateView,
 )
+from core.views.game_server.game_server_detail_index import GameServerDetailIndexView
+from core.views.index import IndexView
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
@@ -37,8 +41,8 @@ gameserver_urlpatterns = [
     ),
     path(
         "game-server/<int:pk>/",
-        GameServerDetailView.as_view(),
-        name="gameserver_detail",
+        GameServerDetailIndexView.as_view(),
+        name="gameserver_detail_index",
     ),
     path(
         "game-server/<int:pk>/update/",
@@ -49,6 +53,11 @@ gameserver_urlpatterns = [
         "game-server/<int:pk>/delete/",
         GameServerDeleteView.as_view(),
         name="gameserver_delete",
+    ),
+    path(
+        "game-server/<int:pk>/detail",
+        GameServerDetailDatabaseView.as_view(),
+        name="gameserver_detail",
     ),
     path(
         "game-server/<int:pk>/rcon",
@@ -93,7 +102,8 @@ player_urlpatterns = [
 
 
 urlpatterns = [
-    path("", RedirectView.as_view(pattern_name="gameserver_list"), name="index"),
+    # path("", RedirectView.as_view(pattern_name="gameserver_list"), name="index"),
+    path("", IndexView.as_view(), name="index"),
 ]
 urlpatterns += gameserver_urlpatterns
 urlpatterns += team_urlpatterns
