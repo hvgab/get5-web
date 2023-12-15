@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
     <section class="section section has-background-white">
         <div class="container">
@@ -6,7 +6,7 @@
             <div class="columns">
                 <div class="column">
                     <h3 class="title">Form</h3>
-                    <form class="" method="post">
+                    <form method="post">
                         <table class="table">
                             {% csrf_token %}
                             {{ form.as_table }}
@@ -29,7 +29,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <img src="{{ friend.avatar }}" alt="friend avatar">
+                                    <img src="{{ friend.avatar }}" alt="friend avatar"/>
                                 </td>
                                 <td>{{ friend.personaname }}</td>
                                 <td>{{ friend.realname }}</td>

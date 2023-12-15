@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="form-title">Add cup</h2>
+            <form method="post">
+                <table class="table">
+                    {% csrf_token %}
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </section>
+{% endblock content %}

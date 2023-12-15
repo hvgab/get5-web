@@ -47,7 +47,7 @@
                 </div>
                 <div id="navbarBasicExample" class="navbar-menu">
                     <div class="navbar-start">
-                        <!-- Game Servers -->
+                        {# Game Servers #}
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a href="{% url 'gameserver_index' %}" class="navbar-link">Game Servers</a>
                             <div class="navbar-dropdown">
@@ -55,7 +55,23 @@
                                 <a href="{% url 'gameserver_create' %}" class="navbar-item">New</a>
                             </div>
                         </div>
-                        <!-- Teams -->
+                        {# Organization #}
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="{% url 'organization_list' %}" class="navbar-link">Organization</a>
+                            <div class="navbar-dropdown">
+                                <a href="{% url 'organization_list' %}" class="navbar-item">List</a>
+                                <a href="{% url 'organization_create' %}" class="navbar-item">New</a>
+                            </div>
+                        </div>
+                        {# Cup #}
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="{% url 'cup_list' %}" class="navbar-link">Cup</a>
+                            <div class="navbar-dropdown">
+                                <a href="{% url 'cup_list' %}" class="navbar-item">List</a>
+                                <a href="{% url 'cup_create' %}" class="navbar-item">New</a>
+                            </div>
+                        </div>
+                        {# Teams #}
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a href="{% url 'team_index' %}" class="navbar-link">Teams</a>
                             <div class="navbar-dropdown">
@@ -63,6 +79,7 @@
                                 <a href="{% url 'team_create' %}" class="navbar-item">New</a>
                             </div>
                         </div>
+                        {# Match #}
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a href="{% url 'match_index' %}" class="navbar-link">Matches</a>
                             <div class="navbar-dropdown">
@@ -70,7 +87,7 @@
                                 <a href="{% url 'match_create' %}" class="navbar-item">New</a>
                             </div>
                         </div>
-                        {% comment %}
+                        {# Players #}
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a href="{% url 'player_index' %}" class="navbar-link">Players</a>
                             <div class="navbar-dropdown">
@@ -78,7 +95,7 @@
                                 <a href="{% url 'player_create' %}" class="navbar-item">New</a>
                             </div>
                         </div>
-                        {% endcomment %}
+                        {# More #}
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">More</a>
                             <div class="navbar-dropdown">

@@ -1,3 +1,4 @@
+from .cup import CupCreateView, CupDeleteView, CupDetailView, CupListView, CupUpdateView
 from .game_server import (
     GameServerCreateView,
     GameServerDeleteView,
@@ -15,6 +16,13 @@ from .match import (
     MatchDetailView,
     MatchListView,
     MatchUpdateView,
+)
+from .organization import (
+    OrganizationCreateView,
+    OrganizationDeleteView,
+    OrganizationDetailView,
+    OrganizationListView,
+    OrganizationUpdateView,
 )
 from .player import (
     PlayerCreateView,

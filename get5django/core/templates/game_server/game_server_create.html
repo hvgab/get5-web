@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
     <div class="section has-background-white">
-        <div class="">
+        <div>
             <div class="columns">
                 <div class="column is-narrow">
                     <h2 class="title">Add GameServer</h2>
-                    <form class="" method="post">
+                    <form method="post">
                         <table class="table">
                             {% csrf_token %}
                             {{ form.as_table }}

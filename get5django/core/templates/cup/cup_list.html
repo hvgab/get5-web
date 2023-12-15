@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="form-title">cup</h2>
+            <table class="table table-fluid">
+                <thead>
+                    <tr>
+                        <th>cup</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cup in object_list %}
+                        <tr>
+                            <td>{{ cup }}</td>
+                            <td>
+                                <a href="{% url "cup_detail" cup.id %}">view</a>
+                            </td>
+                            <td>
+                                <a href="{% url "cup_update" cup.id %}">edit</a>
+                            </td>
+                            <td>
+                                <a href="{% url "cup_delete" cup.id %}">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url "cup_create" %}">New</a>
+        </div>
+    </section>
+{% endblock content %}

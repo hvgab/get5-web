@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="form-title">organization</h2>
+            <table class="table table-fluid">
+                <thead>
+                    <tr>
+                        <th>organization</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for organization in object_list %}
+                        <tr>
+                            <td>{{ organization }}</td>
+                            <td>
+                                <a href="{% url "organization_detail" organization.id %}">view</a>
+                            </td>
+                            <td>
+                                <a href="{% url "organization_update" organization.id %}">edit</a>
+                            </td>
+                            <td>
+                                <a href="{% url "organization_delete" organization.id %}">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url "organization_create" %}">New</a>
+        </div>
+    </section>
+{% endblock content %}

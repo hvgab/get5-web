@@ -1,16 +1,14 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
     <section class="section">
         <div class="container">
             <h2 class="title">{{ team.name }}</h2>
-            
             <ul>
                 <li>{{ team.player1 }}</li>
                 <li>{{ team.player2 }}</li>
                 <li>{{ team.player3 }}</li>
                 <li>{{ team.player4 }}</li>
             </ul>
-
         </div>
     </section>
 {% endblock content %}

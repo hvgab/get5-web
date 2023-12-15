@@ -255,12 +255,29 @@ de_shortdust
 
 class Organization(models.Model):
     name = models.CharField(max_length=64)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="organization_set_as_owner",
+    )
+    admins = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="organization_set_as_admin",
+        null=True,
+        blank=True,
+    )
 
 
 class Cup(models.Model):
     name = models.CharField(max_length=64)
-    organization = models.ForeignKey("organization")
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    organization = models.ForeignKey(
+        "organization", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="cup_set_as_owner",
+    )
+    admins = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="cup_set_as_admin", null=True, blank=True
+    )
