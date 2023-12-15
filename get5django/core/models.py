@@ -1,3 +1,4 @@
+from core.services.a2s_info_service import A2sInfoService
 from django.conf import settings
 from django.db import models
 
@@ -20,6 +21,7 @@ class GameServer(models.Model):
     url = models.CharField(max_length=255)
     internal_url = models.CharField(
         max_length=255,
+        unique=False,
         null=True,
         blank=True,
         help_text="If you are hosting this app on the same local network as the game-server.",
