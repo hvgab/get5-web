@@ -1,11 +1,9 @@
-from core.services.a2s_info_service import A2sInfoService
 from django.conf import settings
 from django.db import models
 
 
 # Create your models here.
 class GameServer(models.Model):
-
     owner = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
