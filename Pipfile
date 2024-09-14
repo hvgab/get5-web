@@ -19,6 +19,7 @@ social-auth-app-django = "*"
 djlint = "*"
 django-login-required-middleware = "*"
 tzdata = "*"
+unidecode = "*"
 
 [dev-packages]
 djlint = "*"

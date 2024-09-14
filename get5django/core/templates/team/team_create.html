@@ -21,8 +21,10 @@
                             <th>Index</th>
                             <th>Avatar</th>
                             <th>Persona Name</th>
+                            <th>Persona Name</th>
                             <th>Real Name</th>
                             <th>SteamID</th>
+                            <th>Owns cs2</th>
                             <th>Profile Url</th>
                         </tr>
                         {% for friend in steam_friends %}
@@ -31,9 +33,17 @@
                                 <td>
                                     <img src="{{ friend.avatar }}" alt="friend avatar"/>
                                 </td>
+                                {% if friend.translit != friend.personaname %}
+                                    <td class="has-background-warning-light">
+                                {%else%}
+                                    <td>
+                                {% endif %}
+                                    {{ friend.translit }}
+                                </td>
                                 <td>{{ friend.personaname }}</td>
                                 <td>{{ friend.realname }}</td>
                                 <td>{{ friend.steamid }}</td>
+                                <td>{{ friend.owns_cs2|yesno:"Yes,No,Maybe" }}</td>
                                 <td>
                                     <a href="{{ friend.profileurl }}">Steam Profile</a>
                                 </td>

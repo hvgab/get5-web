@@ -254,6 +254,7 @@ de_shortdust
 
 
 class Organization(models.Model):
+
     name = models.CharField(max_length=64)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -266,6 +267,9 @@ class Organization(models.Model):
         null=True,
         blank=True,
     )
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Cup(models.Model):
@@ -281,3 +285,6 @@ class Cup(models.Model):
     admins = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="cup_set_as_admin", null=True, blank=True
     )
+
+    def __str__(self) -> str:
+        return f"{self.name} by {self.organization}"
